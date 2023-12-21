@@ -1,0 +1,581 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		9215A8232AEAA133001AFF95 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9215A8222AEAA133001AFF95 /* Constants.swift */; };
+		92303ED22ACEDCC700BFA222 /* ContactPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92303ED12ACEDCC700BFA222 /* ContactPickerView.swift */; };
+		92303ED42ACEDCE300BFA222 /* SharingProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92303ED32ACEDCE300BFA222 /* SharingProvider.swift */; };
+		925ACFDC29BB6CEA009A68A9 /* CallsKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925ACFDB29BB6CEA009A68A9 /* CallsKeyboard.swift */; };
+		92622C81295C55F400953BDA /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92622C80295C55F400953BDA /* RootView.swift */; };
+		92622C83295C56E800953BDA /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92622C82295C56E800953BDA /* AccountView.swift */; };
+		92622C85295C570200953BDA /* DialerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92622C84295C570200953BDA /* DialerView.swift */; };
+		92622C87295C8E1200953BDA /* AccountTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92622C86295C8E1200953BDA /* AccountTextField.swift */; };
+		92622CA7295DBF0C00953BDA /* AVFAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92622CA6295DBF0B00953BDA /* AVFAudio.framework */; };
+		927533C829F1371D0025A357 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927533C729F1371D0025A357 /* Alert.swift */; };
+		927533CA29F93E770025A357 /* CallData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927533C929F93E770025A357 /* CallData.swift */; };
+		927533CE29FBB6190025A357 /* ConferenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927533CD29FBB6190025A357 /* ConferenceView.swift */; };
+		927533D02A0157B10025A357 /* ConferenceItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927533CF2A0157B10025A357 /* ConferenceItem.swift */; };
+		92911DCD297FB89200CDEFD8 /* DialerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92911DCC297FB89200CDEFD8 /* DialerButton.swift */; };
+		92911DFE298021A400CDEFD8 /* mtswide_regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 92911DF929801DD600CDEFD8 /* mtswide_regular.ttf */; };
+		92911E032982CDF400CDEFD8 /* CallsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92911E022982CDF400CDEFD8 /* CallsView.swift */; };
+		92BCB9EE2976D4D5009ABD67 /* CallClientWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92BCB9ED2976D4D5009ABD67 /* CallClientWrapper.swift */; };
+		92BCB9F029783306009ABD67 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92BCB9EF29783306009ABD67 /* Utils.swift */; };
+		92CC5F2F2987F92400ADFA91 /* AccountCallTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92CC5F2E2987F92400ADFA91 /* AccountCallTabView.swift */; };
+		92CC5F332988058000ADFA91 /* CallItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92CC5F322988058000ADFA91 /* CallItem.swift */; };
+		92CC5F3529892B1B00ADFA91 /* CallButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92CC5F3429892B1B00ADFA91 /* CallButton.swift */; };
+		92EAED2C295AC1F60096239E /* exolve_exampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92EAED2B295AC1F60096239E /* exolve_exampleApp.swift */; };
+		92EAED30295AC1F80096239E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 92EAED2F295AC1F80096239E /* Assets.xcassets */; };
+		92EAED33295AC1F80096239E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 92EAED32295AC1F80096239E /* Preview Assets.xcassets */; };
+		A530E1FB29C1A361007997F5 /* DtmfView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A530E1F929C1A361007997F5 /* DtmfView.swift */; };
+		C81F96F12B30893700C8CE52 /* ExolveVoiceSDK in Frameworks */ = {isa = PBXBuildFile; productRef = C81F96F02B30893700C8CE52 /* ExolveVoiceSDK */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		92622C99295DA7B100953BDA /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		9215A8222AEAA133001AFF95 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		92303ED12ACEDCC700BFA222 /* ContactPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactPickerView.swift; sourceTree = "<group>"; };
+		92303ED32ACEDCE300BFA222 /* SharingProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharingProvider.swift; sourceTree = "<group>"; };
+		925ACFDB29BB6CEA009A68A9 /* CallsKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallsKeyboard.swift; sourceTree = "<group>"; };
+		92622C80295C55F400953BDA /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		92622C82295C56E800953BDA /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
+		92622C84295C570200953BDA /* DialerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialerView.swift; sourceTree = "<group>"; };
+		92622C86295C8E1200953BDA /* AccountTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountTextField.swift; sourceTree = "<group>"; };
+		92622CA6295DBF0B00953BDA /* AVFAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFAudio.framework; path = System/Library/Frameworks/AVFAudio.framework; sourceTree = SDKROOT; };
+		927533C729F1371D0025A357 /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
+		927533C929F93E770025A357 /* CallData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallData.swift; sourceTree = "<group>"; };
+		927533CD29FBB6190025A357 /* ConferenceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConferenceView.swift; sourceTree = "<group>"; };
+		927533CF2A0157B10025A357 /* ConferenceItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConferenceItem.swift; sourceTree = "<group>"; };
+		92911DCB2979256300CDEFD8 /* exolve-example-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "exolve-example-Info.plist"; sourceTree = SOURCE_ROOT; };
+		92911DCC297FB89200CDEFD8 /* DialerButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialerButton.swift; sourceTree = "<group>"; };
+		92911DF929801DD600CDEFD8 /* mtswide_regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = mtswide_regular.ttf; sourceTree = "<group>"; };
+		92911E022982CDF400CDEFD8 /* CallsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallsView.swift; sourceTree = "<group>"; };
+		929F496629C1EB010072C3C9 /* exolve_example.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = exolve_example.entitlements; sourceTree = "<group>"; };
+		92BCB9E629759C9C009ABD67 /* exolve_example-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "exolve_example-Bridging-Header.h"; sourceTree = "<group>"; };
+		92BCB9ED2976D4D5009ABD67 /* CallClientWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallClientWrapper.swift; sourceTree = "<group>"; };
+		92BCB9EF29783306009ABD67 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		92CC5F2E2987F92400ADFA91 /* AccountCallTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCallTabView.swift; sourceTree = "<group>"; };
+		92CC5F322988058000ADFA91 /* CallItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallItem.swift; sourceTree = "<group>"; };
+		92CC5F3429892B1B00ADFA91 /* CallButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallButton.swift; sourceTree = "<group>"; };
+		92EAED28295AC1F60096239E /* exolve_example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = exolve_example.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		92EAED2B295AC1F60096239E /* exolve_exampleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = exolve_exampleApp.swift; sourceTree = "<group>"; };
+		92EAED2F295AC1F80096239E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		92EAED32295AC1F80096239E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		A530E1F929C1A361007997F5 /* DtmfView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DtmfView.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		92EAED25295AC1F60096239E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				92622CA7295DBF0C00953BDA /* AVFAudio.framework in Frameworks */,
+				C81F96F12B30893700C8CE52 /* ExolveVoiceSDK in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		9215A81E2AEA9B61001AFF95 /* components */ = {
+			isa = PBXGroup;
+			children = (
+				92622C86295C8E1200953BDA /* AccountTextField.swift */,
+				927533C729F1371D0025A357 /* Alert.swift */,
+				92CC5F3429892B1B00ADFA91 /* CallButton.swift */,
+				92303ED12ACEDCC700BFA222 /* ContactPickerView.swift */,
+				92911DCC297FB89200CDEFD8 /* DialerButton.swift */,
+			);
+			path = components;
+			sourceTree = "<group>";
+		};
+		9215A81F2AEA9B61001AFF95 /* core */ = {
+			isa = PBXGroup;
+			children = (
+				92BCB9ED2976D4D5009ABD67 /* CallClientWrapper.swift */,
+				927533C929F93E770025A357 /* CallData.swift */,
+			);
+			path = core;
+			sourceTree = "<group>";
+		};
+		9215A8202AEA9B61001AFF95 /* views */ = {
+			isa = PBXGroup;
+			children = (
+				92CC5F2E2987F92400ADFA91 /* AccountCallTabView.swift */,
+				92622C82295C56E800953BDA /* AccountView.swift */,
+				92CC5F322988058000ADFA91 /* CallItem.swift */,
+				925ACFDB29BB6CEA009A68A9 /* CallsKeyboard.swift */,
+				92911E022982CDF400CDEFD8 /* CallsView.swift */,
+				927533CF2A0157B10025A357 /* ConferenceItem.swift */,
+				927533CD29FBB6190025A357 /* ConferenceView.swift */,
+				92622C84295C570200953BDA /* DialerView.swift */,
+				A530E1F929C1A361007997F5 /* DtmfView.swift */,
+				92EAED2B295AC1F60096239E /* exolve_exampleApp.swift */,
+				92622C80295C55F400953BDA /* RootView.swift */,
+			);
+			path = views;
+			sourceTree = "<group>";
+		};
+		9215A8212AEA9BE9001AFF95 /* utils */ = {
+			isa = PBXGroup;
+			children = (
+				9215A8222AEAA133001AFF95 /* Constants.swift */,
+				92303ED32ACEDCE300BFA222 /* SharingProvider.swift */,
+				92BCB9EF29783306009ABD67 /* Utils.swift */,
+			);
+			path = utils;
+			sourceTree = "<group>";
+		};
+		92622C96295DA7B100953BDA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				92622CA6295DBF0B00953BDA /* AVFAudio.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		92911DEE29801DC900CDEFD8 /* fonts */ = {
+			isa = PBXGroup;
+			children = (
+				92911DF929801DD600CDEFD8 /* mtswide_regular.ttf */,
+			);
+			path = fonts;
+			sourceTree = "<group>";
+		};
+		92EAED1F295AC1F60096239E = {
+			isa = PBXGroup;
+			children = (
+				92EAED2A295AC1F60096239E /* exolve_example */,
+				92EAED29295AC1F60096239E /* Products */,
+				92622C96295DA7B100953BDA /* Frameworks */,
+				92BCB9E629759C9C009ABD67 /* exolve_example-Bridging-Header.h */,
+			);
+			sourceTree = "<group>";
+		};
+		92EAED29295AC1F60096239E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				92EAED28295AC1F60096239E /* exolve_example.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		92EAED2A295AC1F60096239E /* exolve_example */ = {
+			isa = PBXGroup;
+			children = (
+				92EAED2F295AC1F80096239E /* Assets.xcassets */,
+				9215A81E2AEA9B61001AFF95 /* components */,
+				9215A81F2AEA9B61001AFF95 /* core */,
+				929F496629C1EB010072C3C9 /* exolve_example.entitlements */,
+				92911DCB2979256300CDEFD8 /* exolve-example-Info.plist */,
+				92911DEE29801DC900CDEFD8 /* fonts */,
+				92EAED31295AC1F80096239E /* Preview Content */,
+				9215A8212AEA9BE9001AFF95 /* utils */,
+				9215A8202AEA9B61001AFF95 /* views */,
+			);
+			path = exolve_example;
+			sourceTree = "<group>";
+		};
+		92EAED31295AC1F80096239E /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				92EAED32295AC1F80096239E /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		92EAED27295AC1F60096239E /* exolve_example */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 92EAED36295AC1F80096239E /* Build configuration list for PBXNativeTarget "exolve_example" */;
+			buildPhases = (
+				92EAED24295AC1F60096239E /* Sources */,
+				92EAED25295AC1F60096239E /* Frameworks */,
+				92EAED26295AC1F60096239E /* Resources */,
+				92622C99295DA7B100953BDA /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9266EC6A2AFD26E800768C23 /* PBXTargetDependency */,
+			);
+			name = exolve_example;
+			packageProductDependencies = (
+				C81F96F02B30893700C8CE52 /* ExolveVoiceSDK */,
+			);
+			productName = exolve_example;
+			productReference = 92EAED28295AC1F60096239E /* exolve_example.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		92EAED20295AC1F60096239E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1400;
+				LastUpgradeCheck = 1400;
+				TargetAttributes = {
+					92EAED27295AC1F60096239E = {
+						CreatedOnToolsVersion = 14.0.1;
+						LastSwiftMigration = 1400;
+					};
+				};
+			};
+			buildConfigurationList = 92EAED23295AC1F60096239E /* Build configuration list for PBXProject "exolve_example" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 92EAED1F295AC1F60096239E;
+			packageReferences = (
+				A531265F2B356C8200221859 /* XCRemoteSwiftPackageReference "mobile-voice-sdk" */,
+			);
+			productRefGroup = 92EAED29295AC1F60096239E /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				92EAED27295AC1F60096239E /* exolve_example */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		92EAED26295AC1F60096239E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				92911DFE298021A400CDEFD8 /* mtswide_regular.ttf in Resources */,
+				92EAED33295AC1F80096239E /* Preview Assets.xcassets in Resources */,
+				92EAED30295AC1F80096239E /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		92EAED24295AC1F60096239E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				92CC5F332988058000ADFA91 /* CallItem.swift in Sources */,
+				92622C83295C56E800953BDA /* AccountView.swift in Sources */,
+				927533D02A0157B10025A357 /* ConferenceItem.swift in Sources */,
+				927533C829F1371D0025A357 /* Alert.swift in Sources */,
+				92CC5F3529892B1B00ADFA91 /* CallButton.swift in Sources */,
+				927533CE29FBB6190025A357 /* ConferenceView.swift in Sources */,
+				92911DCD297FB89200CDEFD8 /* DialerButton.swift in Sources */,
+				92BCB9F029783306009ABD67 /* Utils.swift in Sources */,
+				925ACFDC29BB6CEA009A68A9 /* CallsKeyboard.swift in Sources */,
+				92EAED2C295AC1F60096239E /* exolve_exampleApp.swift in Sources */,
+				92622C87295C8E1200953BDA /* AccountTextField.swift in Sources */,
+				92CC5F2F2987F92400ADFA91 /* AccountCallTabView.swift in Sources */,
+				92622C81295C55F400953BDA /* RootView.swift in Sources */,
+				A530E1FB29C1A361007997F5 /* DtmfView.swift in Sources */,
+				92303ED22ACEDCC700BFA222 /* ContactPickerView.swift in Sources */,
+				927533CA29F93E770025A357 /* CallData.swift in Sources */,
+				92303ED42ACEDCE300BFA222 /* SharingProvider.swift in Sources */,
+				92911E032982CDF400CDEFD8 /* CallsView.swift in Sources */,
+				92BCB9EE2976D4D5009ABD67 /* CallClientWrapper.swift in Sources */,
+				92622C85295C570200953BDA /* DialerView.swift in Sources */,
+				9215A8232AEAA133001AFF95 /* Constants.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		9266EC6A2AFD26E800768C23 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 9266EC692AFD26E800768C23 /* ExolveVoiceSDK */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		92EAED34295AC1F80096239E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		92EAED35295AC1F80096239E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		92EAED37295AC1F80096239E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = exolve_example/exolve_example.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"exolve_example/Preview Content\"";
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = KL42TSU837;
+				ENABLE_PREVIEWS = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "exolve-example-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = VoiceDemo;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSContactsUsageDescription = "Application needs access to your contacts";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Need Microphone";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.exolve.demoapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = exolve_demoapp_development;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "exolve_example-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		92EAED38295AC1F80096239E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = exolve_example/exolve_example.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"exolve_example/Preview Content\"";
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = KL42TSU837;
+				ENABLE_PREVIEWS = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "exolve-example-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = VoiceDemo;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSContactsUsageDescription = "Application needs access to your contacts";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Need Microphone";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.exolve.demoapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = exolve_demoapp_development;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "exolve_example-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		92EAED23295AC1F60096239E /* Build configuration list for PBXProject "exolve_example" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				92EAED34295AC1F80096239E /* Debug */,
+				92EAED35295AC1F80096239E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		92EAED36295AC1F80096239E /* Build configuration list for PBXNativeTarget "exolve_example" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				92EAED37295AC1F80096239E /* Debug */,
+				92EAED38295AC1F80096239E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		9215A8242AFBC43E001AFF95 /* XCRemoteSwiftPackageReference "exolve-voice-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/zaitsevdm/exolve-voice-sdk";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+		A531265F2B356C8200221859 /* XCRemoteSwiftPackageReference "mobile-voice-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/mtsexolve/mobile-voice-sdk";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		9266EC692AFD26E800768C23 /* ExolveVoiceSDK */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9215A8242AFBC43E001AFF95 /* XCRemoteSwiftPackageReference "exolve-voice-sdk" */;
+			productName = ExolveVoiceSDK;
+		};
+		C81F96F02B30893700C8CE52 /* ExolveVoiceSDK */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ExolveVoiceSDK;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 92EAED20295AC1F60096239E /* Project object */;
+}

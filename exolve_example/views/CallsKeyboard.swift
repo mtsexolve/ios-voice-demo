@@ -1,0 +1,128 @@
+import SwiftUI
+import ContactsUI
+
+struct CallsKeyboard: View {
+    @ObservedObject var activeCall: CallData
+    @ObservedObject private var client = CallClientWrapper.instance
+
+    var contactPicker = ContactPickerView()
+
+    private let logtag = "CallsKeyboard:"
+
+    var body: some View {
+        ZStack {
+            Rectangle()
+                .fill(.white)
+                .contentShape(Rectangle())
+
+                VStack {
+                    HStack {
+                        CallButton(action: onMute, bgColor: grey,
+                            label: Text(Strings.CallMute),
+                            image: Image(systemName: activeCall.mute ? Images.CallMuteFill : Images.CallMute),
+                            imageColor: activeCall.mute ? .red : .black)
+                        CallButton(action: onKeyboard, bgColor: grey,
+                            label: Text(Strings.Dtmf), image: Image(systemName: Images.Keys3x3))
+                        CallButton(action: onSpeaker, bgColor: grey,
+                            label: Text(Strings.Speaker), image: Image(systemName: Images.Speaker),
+                            imageColor: client.isSpeakerOn ? red: .black)
+                    }
+                    HStack {
+                        CallButton(action: onAdd, bgColor: grey,
+                            label: Text(Strings.Add), image: Image(systemName: Images.Add))
+                        CallButton(action: onTransfer, bgColor: grey,
+                            label: Text(Strings.CallTransfer), image: Image(systemName: Images.CallTransfer), imageColor: .black)
+
+                        switch (activeCall.state) {
+                        case .CS_Connected:
+                            CallButton(action: onHoldResume, bgColor: grey,
+                                label: Text(Strings.CallHold), image: Image(systemName: Images.Pause))
+                        case .CS_OnHold:
+                            CallButton(action: onHoldResume, bgColor: grey,
+                                label: Text(Strings.CallResume), image: Image(systemName: Images.Play))
+                        default:
+                            Circle()
+                                .fill(Color.clear)
+                                .frame(width: 77, height: 77, alignment: .top)
+                        }
+                    }
+                    HStack {
+                        CallButton(action: onTerminate, bgColor: red,
+                            label: Text(Strings.CallTerminate), image: Image(systemName: Images.CallTerminate), imageColor: .white)
+                    }
+                }
+                .padding(.bottom)
+            } // vstack
+        } // zstack
+
+    func onMute() {
+        if !client.conferenceActive {
+            activeCall.call.mute(!activeCall.mute)
+            return
+        }
+
+        let mute = !isMuted()
+        client.calls.filter { return $0.call.inConference }
+            .forEach { $0.call.mute(mute) }
+    }
+
+    func onKeyboard() {
+        if (activeCall.state == .CS_Connected) {
+            NotificationCenter.default.post(name: .showDtmfKeypad, object: nil, userInfo: nil)
+        }
+    }
+
+    func onSpeaker() {
+        client.setSpeakerOn(!client.isSpeakerOn)
+    }
+
+    func onAdd() {
+        NotificationCenter.default.post(name: .showDialer, object: nil, userInfo: nil)
+    }
+
+    func onTerminate() {
+        if client.conferenceActive {
+            client.dismissConference()
+        } else {
+            activeCall.call.terminate()
+        }
+    }
+
+    func onHoldResume() {
+        switch (activeCall.state) {
+        case .CS_Connected:
+            activeCall.call.hold()
+            break
+        case .CS_OnHold:
+            activeCall.call.resume()
+            break
+        default:
+            break
+        }
+    }
+
+    func onTransfer() {
+        NSLog("\(logtag) transferring call")
+        contactPicker.selectPhoneNumber = { (selectedNumber : String?) in
+            NSLog("\(logtag) number for transfer to: \(selectedNumber ?? "null")")
+            if let number = selectedNumber {
+                client.callTransfer(call: activeCall.call, targetId: number)
+            }
+        }
+        contactPicker.pickContact()
+    }
+
+    func isMuted() -> Bool {
+        if !client.conferenceActive {
+            return activeCall.mute
+        }
+
+        for data in client.calls {
+            if data.call.inConference && data.mute {
+                return true
+            }
+        }
+
+        return false
+    }
+}
