@@ -10,6 +10,7 @@ class CallClientWrapper: ObservableObject, RegistrationDelegate, CallsDelegate {
     @Published private(set) var isSpeakerOn: Bool = false
     @Published private(set) var registrationState: RegistrationState
     @Published private(set) var pushToken: String = ""
+    @Published private(set) var versionDescription: String = ""
 
     private(set) var login = ""
     private(set) var password = ""
@@ -44,6 +45,10 @@ class CallClientWrapper: ObservableObject, RegistrationDelegate, CallsDelegate {
 
         callClient = communicator.callClient()
         registrationState = callClient.registrationState()
+
+        let sdkVersionInfo : VersionInfo = communicator.getVersionInfo()
+        versionDescription = "SDK ver.\(sdkVersionInfo.buildVersion) env: \((!sdkVersionInfo.environment.isEmpty) ? sdkVersionInfo.environment : "default" )"
+
         callClient.setRegistrationDelegate(self, with: DispatchQueue.main)
         callClient.setCallsDelegate(self, with: DispatchQueue.main)
 

@@ -47,6 +47,13 @@ struct AccountView: View {
                             .onTapGesture { onTapToCopy() }
                     }
                 }
+                if !client.versionDescription.isEmpty {
+                    Text(client.versionDescription)
+                        .font(Font.custom("MTSWide-Regular", size: 12))
+                        .foregroundColor(.gray)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.vertical, 10)
+                }
                 HStack {
                     Text(Bundle.main.bundleIdentifier ?? "")
                         .font(Font.custom("MTSWide-Regular", size: 12))
