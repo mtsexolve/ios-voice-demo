@@ -3,6 +3,7 @@ import SwiftUI
 struct CallItem: View {
     @ObservedObject var data: CallData
     @ObservedObject var activeCall: CallData
+    var index: Int
 
     private let client = CallClientWrapper.instance
 
@@ -49,25 +50,28 @@ struct CallItem: View {
                                     Text(Strings.CallTerminate)
                                 }
                             }
-                        }
+                        }.accessibilityIdentifier("CallItemTerminate\(index)")
 
                         Button(action: onTap) {
                             HStack {
                                 if data.call.state == .CS_New && data.call.direction == .CD_Incoming {
                                     Image(systemName: Images.CallAnswer)
                                         .foregroundColor(Color.green)
+                                        .accessibilityIdentifier("CallItemButtonStateNew\(index)")
                                     Text(Strings.CallAnswer)
                                 } else if data.call.state == .CS_Connected {
                                     Image(systemName: Images.CallHold)
                                         .foregroundColor(Color.green)
+                                        .accessibilityIdentifier("CallItemButtonStateConnected\(index)")
                                     Text(Strings.CallHold)
                                 } else if data.call.state == .CS_OnHold {
                                     Image(systemName: Images.CallResume)
                                         .foregroundColor(Color.green)
+                                        .accessibilityIdentifier("CallItemButtonStateOnHold\(index)")
                                     Text(Strings.CallResume)
                                 }
                             }
-                        }
+                        }.accessibilityIdentifier("CallItemButton\(index)")
 
                     }
                     .padding(.bottom, 5)
@@ -124,7 +128,9 @@ struct CallItem: View {
                 .aspectRatio(contentMode: .fit)
                 .foregroundColor(.black)
                 .frame(width: 40, height: 40, alignment: .center)
-                .padding(.leading))
+                .padding(.leading)
+                .accessibilityIdentifier("CallStatusConnected")
+            )
         case .CS_OnHold:
             return AnyView(Image(systemName: Images.Pause)
                 .resizable()

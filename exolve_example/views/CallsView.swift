@@ -23,9 +23,9 @@ struct CallsView: View {
                     }
 
                     ScrollView {
-                        ForEach(client.calls, id: \.callId) { callData in
+                        ForEach(Array(client.calls.enumerated()), id: \.1.callId) { index , callData in
                             if !callData.call.inConference {
-                                CallItem(data: callData, activeCall: activeCall)
+                                CallItem(data: callData, activeCall: activeCall, index: index)
                                     .onDrag {
                                         NSLog("\(logtag) drag item \(callData.number) id \(callData.callId)")
                                         return NSItemProvider(object: callData.callId as NSString)

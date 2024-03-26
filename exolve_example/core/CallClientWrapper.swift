@@ -45,16 +45,16 @@ class CallClientWrapper: ObservableObject, RegistrationDelegate, CallsDelegate {
 
         callClient = communicator.callClient()
         registrationState = callClient.registrationState()
-
+        
         let sdkVersionInfo : VersionInfo = communicator.getVersionInfo()
         versionDescription = "SDK ver.\(sdkVersionInfo.buildVersion) env: \((!sdkVersionInfo.environment.isEmpty) ? sdkVersionInfo.environment : "default" )"
-
+        
         callClient.setRegistrationDelegate(self, with: DispatchQueue.main)
         callClient.setCallsDelegate(self, with: DispatchQueue.main)
 
-        communicator.retrievePushToken { [self] (str: String?) in
+        communicator.retrieveVoipPushToken { [self] (str: String?) in
             let token = str ?? ""
-            NSLog("\(logtag) retrieved push token \"\(token)\"")
+            NSLog("\(logtag) retrieved voip push token \"\(token)\"")
             pushToken = token
         }
 

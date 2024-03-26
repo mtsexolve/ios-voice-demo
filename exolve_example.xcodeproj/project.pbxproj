@@ -31,6 +31,7 @@
 		92EAED2C295AC1F60096239E /* exolve_exampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92EAED2B295AC1F60096239E /* exolve_exampleApp.swift */; };
 		92EAED30295AC1F80096239E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 92EAED2F295AC1F80096239E /* Assets.xcassets */; };
 		92EAED33295AC1F80096239E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 92EAED32295AC1F80096239E /* Preview Assets.xcassets */; };
+		92EF6F6E2BA880AB0043D2E3 /* RouteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92EF6F6D2BA880AB0043D2E3 /* RouteButton.swift */; };
 		A530E1FB29C1A361007997F5 /* DtmfView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A530E1F929C1A361007997F5 /* DtmfView.swift */; };
 		C81F96F12B30893700C8CE52 /* ExolveVoiceSDK in Frameworks */ = {isa = PBXBuildFile; productRef = C81F96F02B30893700C8CE52 /* ExolveVoiceSDK */; };
 /* End PBXBuildFile section */
@@ -77,6 +78,7 @@
 		92EAED2B295AC1F60096239E /* exolve_exampleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = exolve_exampleApp.swift; sourceTree = "<group>"; };
 		92EAED2F295AC1F80096239E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		92EAED32295AC1F80096239E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		92EF6F6D2BA880AB0043D2E3 /* RouteButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouteButton.swift; sourceTree = "<group>"; };
 		A530E1F929C1A361007997F5 /* DtmfView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DtmfView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -101,6 +103,7 @@
 				92CC5F3429892B1B00ADFA91 /* CallButton.swift */,
 				92303ED12ACEDCC700BFA222 /* ContactPickerView.swift */,
 				92911DCC297FB89200CDEFD8 /* DialerButton.swift */,
+				92EF6F6D2BA880AB0043D2E3 /* RouteButton.swift */,
 			);
 			path = components;
 			sourceTree = "<group>";
@@ -291,6 +294,7 @@
 				925ACFDC29BB6CEA009A68A9 /* CallsKeyboard.swift in Sources */,
 				92EAED2C295AC1F60096239E /* exolve_exampleApp.swift in Sources */,
 				92622C87295C8E1200953BDA /* AccountTextField.swift in Sources */,
+				92EF6F6E2BA880AB0043D2E3 /* RouteButton.swift in Sources */,
 				92CC5F2F2987F92400ADFA91 /* AccountCallTabView.swift in Sources */,
 				92622C81295C55F400953BDA /* RootView.swift in Sources */,
 				A530E1FB29C1A361007997F5 /* DtmfView.swift in Sources */,
@@ -560,7 +564,7 @@
 			repositoryURL = "https://github.com/mtsexolve/mobile-voice-sdk";
 			requirement = {
 				kind = exactVersion;
-				version = 1.0.10;
+				version = 1.0.11;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

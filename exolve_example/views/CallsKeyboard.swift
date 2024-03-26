@@ -23,23 +23,26 @@ struct CallsKeyboard: View {
                             imageColor: activeCall.mute ? .red : .black)
                         CallButton(action: onKeyboard, bgColor: grey,
                             label: Text(Strings.Dtmf), image: Image(systemName: Images.Keys3x3))
-                        CallButton(action: onSpeaker, bgColor: grey,
-                            label: Text(Strings.Speaker), image: Image(systemName: Images.Speaker),
-                            imageColor: client.isSpeakerOn ? red: .black)
+                        .accessibilityIdentifier("DTMFButton")
+                        RouteButton(label: Text(Strings.Speaker))
                     }
                     HStack {
                         CallButton(action: onAdd, bgColor: grey,
                             label: Text(Strings.Add), image: Image(systemName: Images.Add))
+                        .accessibilityIdentifier("CallsKeyboardAddCallButton")
                         CallButton(action: onTransfer, bgColor: grey,
                             label: Text(Strings.CallTransfer), image: Image(systemName: Images.CallTransfer), imageColor: .black)
+                        .accessibilityIdentifier("CallsKeyboardTransferCallButton")
 
                         switch (activeCall.state) {
                         case .CS_Connected:
                             CallButton(action: onHoldResume, bgColor: grey,
                                 label: Text(Strings.CallHold), image: Image(systemName: Images.Pause))
+                            .accessibilityIdentifier("CallsKeyboardHoldButton")
                         case .CS_OnHold:
                             CallButton(action: onHoldResume, bgColor: grey,
                                 label: Text(Strings.CallResume), image: Image(systemName: Images.Play))
+                            .accessibilityIdentifier("CallsKeyboardResumeButton")
                         default:
                             Circle()
                                 .fill(Color.clear)
@@ -48,7 +51,7 @@ struct CallsKeyboard: View {
                     }
                     HStack {
                         CallButton(action: onTerminate, bgColor: red,
-                            label: Text(Strings.CallTerminate), image: Image(systemName: Images.CallTerminate), imageColor: .white)
+                                   label: Text(Strings.CallTerminate), image: Image(systemName: Images.CallTerminate), imageColor: .white).accessibilityIdentifier("CallsKeyboardTerminateButton")
                     }
                 }
                 .padding(.bottom)
@@ -70,10 +73,6 @@ struct CallsKeyboard: View {
         if (activeCall.state == .CS_Connected) {
             NotificationCenter.default.post(name: .showDtmfKeypad, object: nil, userInfo: nil)
         }
-    }
-
-    func onSpeaker() {
-        client.setSpeakerOn(!client.isSpeakerOn)
     }
 
     func onAdd() {

@@ -8,9 +8,10 @@ struct ConferenceView: View {
     var body: some View {
         ScrollView(.horizontal) {
             HStack {
-                ForEach(client.calls, id: \.callId) { data in
+                ForEach(Array(client.calls.enumerated()), id: \.1.callId) { index , data in
                     if data.call.inConference {
                         ConferenceItem(data: data)
+                            .accessibilityIdentifier("ConferenceItem\(index)")
                     }
                 }
             }

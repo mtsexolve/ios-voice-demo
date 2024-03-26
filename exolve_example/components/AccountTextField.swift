@@ -13,6 +13,7 @@ struct AccountTextField: View {
             TextField(hint, text: $value)
             .disableAutocorrection(true)
             .textFieldStyle(.roundedBorder)
+            .accessibilityIdentifier(hint)
         }
         .padding(.bottom)
     }
