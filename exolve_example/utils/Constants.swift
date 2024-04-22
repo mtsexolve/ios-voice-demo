@@ -17,7 +17,7 @@ struct Strings {
     static let CallResume = "Resume"
     static let CallMute = "Mute"
     static let Dtmf = "DTMF"
-    static let Speaker = "Speaker"
+    static let AudioRoute = "Audio Route"
     static let Add = "Add"
     static let CallTransfer = "Transfer"
     static let HeavyAsterisk = "\u{2731}"

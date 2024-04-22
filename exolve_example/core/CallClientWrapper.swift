@@ -11,6 +11,7 @@ class CallClientWrapper: ObservableObject, RegistrationDelegate, CallsDelegate {
     @Published private(set) var registrationState: RegistrationState
     @Published private(set) var pushToken: String = ""
     @Published private(set) var versionDescription: String = ""
+    @Published private(set) var currentAudioRoute: String = Strings.AudioRoute
 
     private(set) var login = ""
     private(set) var password = ""
@@ -33,6 +34,7 @@ class CallClientWrapper: ObservableObject, RegistrationDelegate, CallsDelegate {
         config?.logConfiguration.logLevel = .LL_Debug
         config?.enableSipTrace = true
         config?.callKitConfiguration = CallKitConfiguration.default()
+        config?.callKitConfiguration.notifyInForeground = true
         config?.callKitConfiguration.contactSearchHandler = {callNumber, callback in
             guard let callNumber else { return }
             guard let callback else { return }
@@ -45,10 +47,10 @@ class CallClientWrapper: ObservableObject, RegistrationDelegate, CallsDelegate {
 
         callClient = communicator.callClient()
         registrationState = callClient.registrationState()
-        
+
         let sdkVersionInfo : VersionInfo = communicator.getVersionInfo()
         versionDescription = "SDK ver.\(sdkVersionInfo.buildVersion) env: \((!sdkVersionInfo.environment.isEmpty) ? sdkVersionInfo.environment : "default" )"
-        
+
         callClient.setRegistrationDelegate(self, with: DispatchQueue.main)
         callClient.setCallsDelegate(self, with: DispatchQueue.main)
 
@@ -62,6 +64,11 @@ class CallClientWrapper: ObservableObject, RegistrationDelegate, CallsDelegate {
         login = prefs.string(forKey: UserKey.Login) ?? ""
         password = prefs.string(forKey: UserKey.Password) ?? ""
         lastCall = prefs.string(forKey: UserKey.LastCall) ?? ""
+
+        NotificationCenter.default.addObserver(self,
+            selector:#selector(onAudioRouteChange),
+            name: AVAudioSession.routeChangeNotification,
+            object: nil)
     }
 
     func isRegistered() -> Bool {
@@ -185,6 +192,37 @@ class CallClientWrapper: ObservableObject, RegistrationDelegate, CallsDelegate {
         }
     }
 
+    @objc private func onAudioRouteChange(notification: Notification) {
+        NSLog("\(logtag) audio route changed")
+        if let value = notification.userInfo?[AVAudioSessionRouteChangeReasonKey] as? UInt {
+            let reason = AVAudioSession.RouteChangeReason(rawValue: value)
+            var str: String
+            switch reason {
+            case .newDeviceAvailable:
+                str = "new device available"
+            case .oldDeviceUnavailable:
+                str = "old device unavailable"
+            case .categoryChange:
+                str = "audio category changed"
+            case .override:
+                str = "route overriden"
+            case .wakeFromSleep:
+                str = "wake from sleep"
+            case .noSuitableRouteForCategory:
+                str = "no route for the current category"
+            case .routeConfigurationChange:
+                str = "route configuration changed"
+            default:
+                str = "unknown"
+            }
+            NSLog("\(logtag) reason: \(str)")
+        }
+
+        let routes = AVAudioSession.sharedInstance().currentRoute.outputs;
+        routes.forEach() { NSLog("\(logtag) audio output \($0.portName) as \($0.portType.rawValue)") }
+        currentAudioRoute = routes.isEmpty ? Strings.AudioRoute : routes.first!.portType.rawValue
+    }
+
     //MARK: calls delegate here
     internal func callNew(_ call: Call!) {
         if let call {
@@ -220,6 +258,7 @@ class CallClientWrapper: ObservableObject, RegistrationDelegate, CallsDelegate {
 
     internal func callError(_ call: Call!, error: CallError, message: String) {
         NSLog("\(logtag) call error: \(error.stringValue), \(message)")
+        Alert.show("Call error", message == "" ? error.stringValue : message)
         if let call {
             setCallState(call)
             removeCall(call)

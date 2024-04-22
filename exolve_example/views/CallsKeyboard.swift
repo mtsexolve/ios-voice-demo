@@ -24,7 +24,7 @@ struct CallsKeyboard: View {
                         CallButton(action: onKeyboard, bgColor: grey,
                             label: Text(Strings.Dtmf), image: Image(systemName: Images.Keys3x3))
                         .accessibilityIdentifier("DTMFButton")
-                        RouteButton(label: Text(Strings.Speaker))
+                        RouteButton(bgColor: grey, label: Text(client.currentAudioRoute))
                     }
                     HStack {
                         CallButton(action: onAdd, bgColor: grey,

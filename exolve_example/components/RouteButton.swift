@@ -29,6 +29,9 @@ public struct RouteButton<Label> : View where Label : View {
                     .frame(width: 65, height: 65)
             }
             label
+                .foregroundColor(Color(UIColor.link))
+                .scaledToFill()
+                .frame(width: 77)
         }
     }
 }

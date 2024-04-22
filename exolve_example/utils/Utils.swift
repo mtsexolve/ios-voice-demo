@@ -57,6 +57,7 @@ extension CallError {
                 "not found",
                 "forbidden",
                 "address incomplete",
+                "authorization error",
                 "connection error",
                 "other error"][rawValue]
     }
