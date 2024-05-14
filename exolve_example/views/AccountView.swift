@@ -3,6 +3,7 @@ import SwiftUI
 struct AccountView: View {
     @State private var login: String
     @State private var password: String
+    @State private var location = CallClientWrapper.instance.locationServiceEnabled
 
     @ObservedObject private var client = CallClientWrapper.instance
 
@@ -47,15 +48,17 @@ struct AccountView: View {
                             .onTapGesture { onTapToCopy() }
                     }
                 }
-                if !client.versionDescription.isEmpty {
-                    Text(client.versionDescription)
-                        .font(Font.custom("MTSWide-Regular", size: 12))
-                        .foregroundColor(.gray)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.vertical, 10)
+                HStack {
+                    Toggle(isOn: $location) {
+                        Text(Strings.CallLocation)
+                    }
+                    .onChange(of: location, perform: { value in client.enableLocationService(value) })
+                    .foregroundColor(Color(UIColor.link))
+                    .toggleStyle(.check)
+                    Spacer()
                 }
                 HStack {
-                    Text(Bundle.main.bundleIdentifier ?? "")
+                    Text(Bundle.main.bundleIdentifier! + "\n" + client.versionDescription)
                         .font(Font.custom("MTSWide-Regular", size: 12))
                         .foregroundColor(.gray)
                     Spacer()
@@ -87,4 +90,23 @@ struct AccountView: View {
         Alert.show("", Strings.PushTokenCopyConfirmation)
     }
 
+}
+
+struct CheckToggleStyle: ToggleStyle {
+    func makeBody(configuration: ToggleStyle.Configuration) -> some View {
+        Button {
+            configuration.isOn.toggle()
+        } label: {
+            Label {
+                configuration.label
+            } icon: {
+                Image(systemName: configuration.isOn ? "checkmark.circle" : "circle")
+            }
+        }
+        .buttonStyle(.plain)
+    }
+}
+
+extension ToggleStyle where Self == CheckToggleStyle {
+    static var check: CheckToggleStyle { .init() }
 }

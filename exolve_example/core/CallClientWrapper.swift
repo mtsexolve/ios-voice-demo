@@ -12,6 +12,7 @@ class CallClientWrapper: ObservableObject, RegistrationDelegate, CallsDelegate {
     @Published private(set) var pushToken: String = ""
     @Published private(set) var versionDescription: String = ""
     @Published private(set) var currentAudioRoute: String = Strings.AudioRoute
+    public private(set) var locationServiceEnabled: Bool = true;
 
     private(set) var login = ""
     private(set) var password = ""
@@ -25,23 +26,27 @@ class CallClientWrapper: ObservableObject, RegistrationDelegate, CallsDelegate {
         static let Login = "login"
         static let Password = "password"
         static let LastCall = "last_call"
+        static let Location = "location"
     }
 
     private let logtag = "CallClientWrapper:"
 
     private init() {
+        let prefs = UserDefaults.standard
+        login = prefs.string(forKey: UserKey.Login) ?? ""
+        password = prefs.string(forKey: UserKey.Password) ?? ""
+        lastCall = prefs.string(forKey: UserKey.LastCall) ?? ""
+        let useLocation = prefs.object(forKey: UserKey.Location) as? Bool ?? true
+        NSLog("\(logtag) location services will be \(useLocation ? "en" : "dis")abled")
+        locationServiceEnabled = useLocation
+
         let config = ExolveVoiceSDK.Configuration.default()
         config?.logConfiguration.logLevel = .LL_Debug
         config?.enableSipTrace = true
         config?.callKitConfiguration = CallKitConfiguration.default()
         config?.callKitConfiguration.notifyInForeground = true
-        config?.callKitConfiguration.contactSearchHandler = {callNumber, callback in
-            guard let callNumber else { return }
-            guard let callback else { return }
-            let result = findContactName(callNumber)
-                ?? formatCallNumber(callNumber, "+X (XXX) XXX-XXXX")
-            callback(result)
-        }
+        config?.callKitConfiguration.contactSearchHandler = contactSearchHandler
+        config?.enableDetectCallLocation = useLocation
 
         communicator = Communicator(configuration: config)
 
@@ -59,11 +64,6 @@ class CallClientWrapper: ObservableObject, RegistrationDelegate, CallsDelegate {
             NSLog("\(logtag) retrieved voip push token \"\(token)\"")
             pushToken = token
         }
-
-        let prefs = UserDefaults.standard
-        login = prefs.string(forKey: UserKey.Login) ?? ""
-        password = prefs.string(forKey: UserKey.Password) ?? ""
-        lastCall = prefs.string(forKey: UserKey.LastCall) ?? ""
 
         NotificationCenter.default.addObserver(self,
             selector:#selector(onAudioRouteChange),
@@ -105,17 +105,29 @@ class CallClientWrapper: ObservableObject, RegistrationDelegate, CallsDelegate {
             session.requestRecordPermission { [self] (granted: Bool) in
                 if granted {
                     NSLog("\(logtag) call to \"\(number)\"")
-                    callClient.placeCall(number)
+                    placeCall(number)
                 }
             }
             break
         case AVAudioSession.RecordPermission.granted:
             NSLog("\(logtag) call to \"\(number)\"")
-                callClient.placeCall(number)
+                placeCall(number)
             break
         default:
             NSLog("\(logtag) no record permission")
             break
+        }
+    }
+
+    private func placeCall(_ number: String) {
+        if locationServiceEnabled && LocationAccessProvider.instance.authorizationStatus == .notDetermined {
+            let action = { [self] in
+                NSLog("\(logtag) place deferred call to \(number)")
+                callClient.placeCall(number)
+            }
+            LocationAccessProvider.instance.requestAuthorization(deferredAction: action)
+        } else {
+            callClient.placeCall(number)
         }
     }
 
@@ -223,6 +235,13 @@ class CallClientWrapper: ObservableObject, RegistrationDelegate, CallsDelegate {
         currentAudioRoute = routes.isEmpty ? Strings.AudioRoute : routes.first!.portType.rawValue
     }
 
+    func enableLocationService(_ enabled: Bool) {
+        NSLog("\(logtag) location services \(enabled ? "en" : "dis")abled")
+        communicator.configurationManager().setDetectCallLocationEnabled(enabled)
+        locationServiceEnabled = enabled
+        UserDefaults.standard.set(enabled, forKey: UserKey.Location);
+    }
+
     //MARK: calls delegate here
     internal func callNew(_ call: Call!) {
         if let call {
@@ -258,7 +277,7 @@ class CallClientWrapper: ObservableObject, RegistrationDelegate, CallsDelegate {
 
     internal func callError(_ call: Call!, error: CallError, message: String) {
         NSLog("\(logtag) call error: \(error.stringValue), \(message)")
-        Alert.show("Call error", message == "" ? error.stringValue : message)
+        Alert.show("Error", "\(message.isEmpty ? error.stringValue : message)")
         if let call {
             setCallState(call)
             removeCall(call)
@@ -279,14 +298,53 @@ class CallClientWrapper: ObservableObject, RegistrationDelegate, CallsDelegate {
             }
         }
     }
-    
+
+    internal func callUserActionRequired(_ call: Call!, pendingEvent: CallPendingEvent, requiredAction: CallUserAction) {
+        NSLog("\(logtag) action required: \(pendingEvent) \(requiredAction)")
+
+        if pendingEvent == .CPE_IncomingCall {
+            if UIApplication.shared.applicationState == .background {
+                NSLog("\(logtag) show notification to open the app")
+                let content = UNMutableNotificationContent()
+                content.title = Strings.NotificationOpenAppTitle
+                content.body = Strings.NotificationOpenAppBody
+                let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 0.01, repeats: false)
+                let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+                Task {
+                    do {
+                        NSLog("\(logtag) add notification")
+                        try await UNUserNotificationCenter.current().add(request)
+                    } catch {
+                        NSLog("\(logtag) error while adding notification")
+                    }
+                }
+            }
+        }
+
+        if pendingEvent == .CPE_AcceptCall {
+            let status = LocationAccessProvider.instance.authorizationStatus
+            if status == .notDetermined {
+                NSLog("\(logtag) authorization required")
+                if let data = calls.first(where: { $0.call == call }) {
+                    data.locationAccessRequired = true
+                    let action = { [self, call] in
+                        NSLog("\(logtag) accepting incoming call")
+                        calls.forEach() { $0.locationAccessRequired = false}
+                        call?.accept()
+                    }
+                    LocationAccessProvider.instance.requestAuthorization(deferredAction: action)
+                }
+            } else if status == .restricted || status == .denied {
+                call.accept() // force SDK to fail on error
+            }
+        }
+    }
+
     private func updateState(_ error:RegistrationError? = nil,_ errorMessage: String? = nil) {
         registrationState = callClient.registrationState()
         if let error = error, let errorMessage = errorMessage {
             NSLog("\(logtag) error: \(error.stringValue), \(errorMessage)")
-            if error == .RE_BadCredentials {
-                Alert.show("Error", "Bad credentials: \n\(errorMessage)")
-            }
+            Alert.show("Error", "\(error.stringValue)\n\(errorMessage)")
         } else {
             NSLog("\(logtag) \(registrationState.stringValue)")
         }

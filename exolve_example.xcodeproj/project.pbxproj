@@ -20,6 +20,7 @@
 		927533CA29F93E770025A357 /* CallData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927533C929F93E770025A357 /* CallData.swift */; };
 		927533CE29FBB6190025A357 /* ConferenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927533CD29FBB6190025A357 /* ConferenceView.swift */; };
 		927533D02A0157B10025A357 /* ConferenceItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927533CF2A0157B10025A357 /* ConferenceItem.swift */; };
+		9288CD432BD26C2B00A369F7 /* LocationAccessProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9288CD422BD26C2B00A369F7 /* LocationAccessProvider.swift */; };
 		92911DCD297FB89200CDEFD8 /* DialerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92911DCC297FB89200CDEFD8 /* DialerButton.swift */; };
 		92911DFE298021A400CDEFD8 /* mtswide_regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 92911DF929801DD600CDEFD8 /* mtswide_regular.ttf */; };
 		92911E032982CDF400CDEFD8 /* CallsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92911E022982CDF400CDEFD8 /* CallsView.swift */; };
@@ -33,6 +34,7 @@
 		92EAED33295AC1F80096239E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 92EAED32295AC1F80096239E /* Preview Assets.xcassets */; };
 		92EF6F6E2BA880AB0043D2E3 /* RouteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92EF6F6D2BA880AB0043D2E3 /* RouteButton.swift */; };
 		A530E1FB29C1A361007997F5 /* DtmfView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A530E1F929C1A361007997F5 /* DtmfView.swift */; };
+		A579D3032BF3C86300915168 /* ExolveVoiceSDK in Frameworks */ = {isa = PBXBuildFile; productRef = A579D3022BF3C86300915168 /* ExolveVoiceSDK */; };
 		C81F96F12B30893700C8CE52 /* ExolveVoiceSDK in Frameworks */ = {isa = PBXBuildFile; productRef = C81F96F02B30893700C8CE52 /* ExolveVoiceSDK */; };
 /* End PBXBuildFile section */
 
@@ -63,6 +65,7 @@
 		927533C929F93E770025A357 /* CallData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallData.swift; sourceTree = "<group>"; };
 		927533CD29FBB6190025A357 /* ConferenceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConferenceView.swift; sourceTree = "<group>"; };
 		927533CF2A0157B10025A357 /* ConferenceItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConferenceItem.swift; sourceTree = "<group>"; };
+		9288CD422BD26C2B00A369F7 /* LocationAccessProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationAccessProvider.swift; sourceTree = "<group>"; };
 		92911DCB2979256300CDEFD8 /* exolve-example-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "exolve-example-Info.plist"; sourceTree = SOURCE_ROOT; };
 		92911DCC297FB89200CDEFD8 /* DialerButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialerButton.swift; sourceTree = "<group>"; };
 		92911DF929801DD600CDEFD8 /* mtswide_regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = mtswide_regular.ttf; sourceTree = "<group>"; };
@@ -87,6 +90,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A579D3032BF3C86300915168 /* ExolveVoiceSDK in Frameworks */,
 				92622CA7295DBF0C00953BDA /* AVFAudio.framework in Frameworks */,
 				C81F96F12B30893700C8CE52 /* ExolveVoiceSDK in Frameworks */,
 			);
@@ -139,6 +143,7 @@
 			isa = PBXGroup;
 			children = (
 				9215A8222AEAA133001AFF95 /* Constants.swift */,
+				9288CD422BD26C2B00A369F7 /* LocationAccessProvider.swift */,
 				92303ED32ACEDCE300BFA222 /* SharingProvider.swift */,
 				92BCB9EF29783306009ABD67 /* Utils.swift */,
 			);
@@ -223,6 +228,7 @@
 			name = exolve_example;
 			packageProductDependencies = (
 				C81F96F02B30893700C8CE52 /* ExolveVoiceSDK */,
+				A579D3022BF3C86300915168 /* ExolveVoiceSDK */,
 			);
 			productName = exolve_example;
 			productReference = 92EAED28295AC1F60096239E /* exolve_example.app */;
@@ -254,7 +260,7 @@
 			);
 			mainGroup = 92EAED1F295AC1F60096239E;
 			packageReferences = (
-				A531265F2B356C8200221859 /* XCRemoteSwiftPackageReference "mobile-voice-sdk" */,
+				A579D3012BF3C86300915168 /* XCRemoteSwiftPackageReference "mobile-voice-sdk" */,
 			);
 			productRefGroup = 92EAED29295AC1F60096239E /* Products */;
 			projectDirPath = "";
@@ -289,6 +295,7 @@
 				927533C829F1371D0025A357 /* Alert.swift in Sources */,
 				92CC5F3529892B1B00ADFA91 /* CallButton.swift in Sources */,
 				927533CE29FBB6190025A357 /* ConferenceView.swift in Sources */,
+				9288CD432BD26C2B00A369F7 /* LocationAccessProvider.swift in Sources */,
 				92911DCD297FB89200CDEFD8 /* DialerButton.swift in Sources */,
 				92BCB9F029783306009ABD67 /* Utils.swift in Sources */,
 				925ACFDC29BB6CEA009A68A9 /* CallsKeyboard.swift in Sources */,
@@ -439,8 +446,8 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = exolve_example/exolve_example.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"exolve_example/Preview Content\"";
@@ -455,13 +462,16 @@
 				INFOPLIST_FILE = "exolve-example-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = VoiceDemo;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				INFOPLIST_KEY_NSContactsUsageDescription = "Application needs access to your contacts";
-				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Need Microphone";
+				INFOPLIST_KEY_NSContactsUsageDescription = "Needs contacts access to know who is calling";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Calls location detection needs this access";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Calls location detections need this access";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Need microphone access for voice calls";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -471,7 +481,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.exolve.demoapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = exolve_demoapp_development;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = exolve_demoapp_adhoc;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "exolve_example-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -487,8 +497,8 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = exolve_example/exolve_example.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"exolve_example/Preview Content\"";
@@ -503,13 +513,16 @@
 				INFOPLIST_FILE = "exolve-example-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = VoiceDemo;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				INFOPLIST_KEY_NSContactsUsageDescription = "Application needs access to your contacts";
-				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Need Microphone";
+				INFOPLIST_KEY_NSContactsUsageDescription = "Needs contacts access to know who is calling";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Calls location detection needs this access";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Calls location detections need this access";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Need microphone access for voice calls";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -519,7 +532,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.exolve.demoapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = exolve_demoapp_development;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = exolve_demoapp_adhoc;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "exolve_example-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
@@ -559,12 +572,12 @@
 				kind = branch;
 			};
 		};
-		A531265F2B356C8200221859 /* XCRemoteSwiftPackageReference "mobile-voice-sdk" */ = {
+		A579D3012BF3C86300915168 /* XCRemoteSwiftPackageReference "mobile-voice-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/mtsexolve/mobile-voice-sdk";
 			requirement = {
 				kind = exactVersion;
-				version = 1.1.0;
+				version = 1.2.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -573,6 +586,11 @@
 		9266EC692AFD26E800768C23 /* ExolveVoiceSDK */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 9215A8242AFBC43E001AFF95 /* XCRemoteSwiftPackageReference "exolve-voice-sdk" */;
+			productName = ExolveVoiceSDK;
+		};
+		A579D3022BF3C86300915168 /* ExolveVoiceSDK */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A579D3012BF3C86300915168 /* XCRemoteSwiftPackageReference "mobile-voice-sdk" */;
 			productName = ExolveVoiceSDK;
 		};
 		C81F96F02B30893700C8CE52 /* ExolveVoiceSDK */ = {

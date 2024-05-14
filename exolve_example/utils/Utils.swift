@@ -59,6 +59,9 @@ extension CallError {
                 "address incomplete",
                 "authorization error",
                 "connection error",
+                "location no access",
+                "location no provider",
+                "location timeout",
                 "other error"][rawValue]
     }
 }
@@ -118,4 +121,15 @@ func findContactName(_ callNumber: String) -> String? {
         }
     } catch {}
     return nil
+}
+
+func contactSearchHandler(_ callNumber: String?, _ callback: ((String?) -> Void)?) -> Void  {
+    guard let callNumber else { return }
+    guard let callback else { return }
+    let format = "+X (XXX) XXX-XXXX"
+    if CNContactStore.authorizationStatus(for: .contacts) == .authorized {
+        callback(findContactName(callNumber) ?? formatCallNumber(callNumber, format))
+    } else {
+        callback(formatCallNumber(callNumber, format))
+    }
 }

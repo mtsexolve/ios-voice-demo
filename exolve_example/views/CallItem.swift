@@ -40,7 +40,7 @@ struct CallItem: View {
 
                         Button(action: onTerminate) {
                             HStack {
-                                if data.call.state == .CS_New && data.call.direction == .CD_Incoming {
+                                if data.isNewIncoming {
                                     Image(systemName: Images.CallReject)
                                         .foregroundColor(Color.red)
                                     Text(Strings.CallReject)
@@ -52,26 +52,28 @@ struct CallItem: View {
                             }
                         }.accessibilityIdentifier("CallItemTerminate\(index)")
 
-                        Button(action: onTap) {
-                            HStack {
-                                if data.call.state == .CS_New && data.call.direction == .CD_Incoming {
-                                    Image(systemName: Images.CallAnswer)
-                                        .foregroundColor(Color.green)
-                                        .accessibilityIdentifier("CallItemButtonStateNew\(index)")
-                                    Text(Strings.CallAnswer)
-                                } else if data.call.state == .CS_Connected {
-                                    Image(systemName: Images.CallHold)
-                                        .foregroundColor(Color.green)
-                                        .accessibilityIdentifier("CallItemButtonStateConnected\(index)")
-                                    Text(Strings.CallHold)
-                                } else if data.call.state == .CS_OnHold {
-                                    Image(systemName: Images.CallResume)
-                                        .foregroundColor(Color.green)
-                                        .accessibilityIdentifier("CallItemButtonStateOnHold\(index)")
-                                    Text(Strings.CallResume)
+                        if !(data.locationAccessRequired && data.isNewIncoming) {
+                            Button(action: onTap) {
+                                HStack {
+                                    if data.isNewIncoming {
+                                        Image(systemName: Images.CallAnswer)
+                                            .foregroundColor(Color.green)
+                                            .accessibilityIdentifier("CallItemButtonStateNew\(index)")
+                                        Text(Strings.CallAnswer)
+                                    } else if data.call.state == .CS_Connected {
+                                        Image(systemName: Images.CallHold)
+                                            .foregroundColor(Color.green)
+                                            .accessibilityIdentifier("CallItemButtonStateConnected\(index)")
+                                        Text(Strings.CallHold)
+                                    } else if data.call.state == .CS_OnHold {
+                                        Image(systemName: Images.CallResume)
+                                            .foregroundColor(Color.green)
+                                            .accessibilityIdentifier("CallItemButtonStateOnHold\(index)")
+                                        Text(Strings.CallResume)
+                                    }
                                 }
-                            }
-                        }.accessibilityIdentifier("CallItemButton\(index)")
+                            }.accessibilityIdentifier("CallItemButton\(index)")
+                        }
 
                     }
                     .padding(.bottom, 5)
@@ -105,7 +107,7 @@ struct CallItem: View {
         } else if data.call.state == .CS_Connected {
             NSLog("\(logtag) hold")
             data.call.hold()
-        } else if data.call.state == .CS_New && data.call.direction == .CD_Incoming {
+        } else if data.isNewIncoming {
             NSLog("\(logtag) accept")
             data.call.accept()
         }

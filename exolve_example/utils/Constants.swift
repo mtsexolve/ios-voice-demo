@@ -24,6 +24,9 @@ struct Strings {
     static let SmallAsterisk = "\u{FE61}"
     static let RegistrationState = "Registration state:"
     static let BackToCall = "Back to call"
+    static let CallLocation = "Call location"
+    static let NotificationOpenAppTitle = "Action required"
+    static let NotificationOpenAppBody = "Open the app to accept a call"
 }
 
 struct Images {

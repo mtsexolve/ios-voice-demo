@@ -12,7 +12,7 @@
 		<string>exolve_demoapp_adhoc</string>
 	</dict>
 	<key>signingCertificate</key>
-	<string>37FA66682C123B95E69188679C428C7AC9D8D998</string>
+	<string>36B24947BF21D25752DD2762573569E51DCDCE7D</string>
 	<key>signingStyle</key>
 	<string>manual</string>
 	<key>stripSwiftSymbols</key>
