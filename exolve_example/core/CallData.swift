@@ -14,6 +14,7 @@ final class CallData: ObservableObject {
         mute = call.isMuted
         locationAccessRequired = false
     }
+
 }
 
 extension CallData {

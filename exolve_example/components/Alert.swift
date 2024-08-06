@@ -4,7 +4,7 @@ class Alert {
     private static var active = false
 
     static func show(_ title: String, _ message: String) {
-        if Alert.active {
+        if Alert.active || UIApplication.shared.applicationState != .active {
             return;
         }
 

@@ -90,6 +90,14 @@ struct ConferenceItem: View {
                 .foregroundColor(.gray)
                 .frame(width: 40, height: 40, alignment: .center)
                 .padding(.leading))
+        case .CS_LostConnection:
+            return AnyView(Image(systemName: Images.CallLostConnection)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .foregroundColor(.gray)
+                .frame(width: 40, height: 40, alignment: .center)
+                .padding(.leading)
+            )
         default:
             return AnyView(Circle()
                 .fill(Color.clear)

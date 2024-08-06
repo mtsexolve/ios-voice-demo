@@ -20,6 +20,7 @@
 		927533CA29F93E770025A357 /* CallData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927533C929F93E770025A357 /* CallData.swift */; };
 		927533CE29FBB6190025A357 /* ConferenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927533CD29FBB6190025A357 /* ConferenceView.swift */; };
 		927533D02A0157B10025A357 /* ConferenceItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927533CF2A0157B10025A357 /* ConferenceItem.swift */; };
+		928566312C11BD7E00309B41 /* OnDropActionSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928566302C11BD7E00309B41 /* OnDropActionSelectorView.swift */; };
 		9288CD432BD26C2B00A369F7 /* LocationAccessProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9288CD422BD26C2B00A369F7 /* LocationAccessProvider.swift */; };
 		92911DCD297FB89200CDEFD8 /* DialerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92911DCC297FB89200CDEFD8 /* DialerButton.swift */; };
 		92911DFE298021A400CDEFD8 /* mtswide_regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 92911DF929801DD600CDEFD8 /* mtswide_regular.ttf */; };
@@ -31,11 +32,9 @@
 		92CC5F3529892B1B00ADFA91 /* CallButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92CC5F3429892B1B00ADFA91 /* CallButton.swift */; };
 		92EAED2C295AC1F60096239E /* exolve_exampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92EAED2B295AC1F60096239E /* exolve_exampleApp.swift */; };
 		92EAED30295AC1F80096239E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 92EAED2F295AC1F80096239E /* Assets.xcassets */; };
-		92EAED33295AC1F80096239E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 92EAED32295AC1F80096239E /* Preview Assets.xcassets */; };
 		92EF6F6E2BA880AB0043D2E3 /* RouteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92EF6F6D2BA880AB0043D2E3 /* RouteButton.swift */; };
 		A530E1FB29C1A361007997F5 /* DtmfView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A530E1F929C1A361007997F5 /* DtmfView.swift */; };
-		A579D3032BF3C86300915168 /* ExolveVoiceSDK in Frameworks */ = {isa = PBXBuildFile; productRef = A579D3022BF3C86300915168 /* ExolveVoiceSDK */; };
-		C81F96F12B30893700C8CE52 /* ExolveVoiceSDK in Frameworks */ = {isa = PBXBuildFile; productRef = C81F96F02B30893700C8CE52 /* ExolveVoiceSDK */; };
+		C82984FB2C627623000FBB51 /* ExolveVoiceSDK in Frameworks */ = {isa = PBXBuildFile; productRef = C82984FA2C627623000FBB51 /* ExolveVoiceSDK */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -65,6 +64,7 @@
 		927533C929F93E770025A357 /* CallData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallData.swift; sourceTree = "<group>"; };
 		927533CD29FBB6190025A357 /* ConferenceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConferenceView.swift; sourceTree = "<group>"; };
 		927533CF2A0157B10025A357 /* ConferenceItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConferenceItem.swift; sourceTree = "<group>"; };
+		928566302C11BD7E00309B41 /* OnDropActionSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnDropActionSelectorView.swift; sourceTree = "<group>"; };
 		9288CD422BD26C2B00A369F7 /* LocationAccessProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationAccessProvider.swift; sourceTree = "<group>"; };
 		92911DCB2979256300CDEFD8 /* exolve-example-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "exolve-example-Info.plist"; sourceTree = SOURCE_ROOT; };
 		92911DCC297FB89200CDEFD8 /* DialerButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialerButton.swift; sourceTree = "<group>"; };
@@ -80,7 +80,6 @@
 		92EAED28295AC1F60096239E /* exolve_example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = exolve_example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		92EAED2B295AC1F60096239E /* exolve_exampleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = exolve_exampleApp.swift; sourceTree = "<group>"; };
 		92EAED2F295AC1F80096239E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		92EAED32295AC1F80096239E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		92EF6F6D2BA880AB0043D2E3 /* RouteButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouteButton.swift; sourceTree = "<group>"; };
 		A530E1F929C1A361007997F5 /* DtmfView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DtmfView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -90,9 +89,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A579D3032BF3C86300915168 /* ExolveVoiceSDK in Frameworks */,
+				C82984FB2C627623000FBB51 /* ExolveVoiceSDK in Frameworks */,
 				92622CA7295DBF0C00953BDA /* AVFAudio.framework in Frameworks */,
-				C81F96F12B30893700C8CE52 /* ExolveVoiceSDK in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -135,6 +133,7 @@
 				A530E1F929C1A361007997F5 /* DtmfView.swift */,
 				92EAED2B295AC1F60096239E /* exolve_exampleApp.swift */,
 				92622C80295C55F400953BDA /* RootView.swift */,
+				928566302C11BD7E00309B41 /* OnDropActionSelectorView.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -148,6 +147,13 @@
 				92BCB9EF29783306009ABD67 /* Utils.swift */,
 			);
 			path = utils;
+			sourceTree = "<group>";
+		};
+		921E16352C4A4F4100BA4059 /* resources */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = resources;
 			sourceTree = "<group>";
 		};
 		92622C96295DA7B100953BDA /* Frameworks */ = {
@@ -193,19 +199,11 @@
 				929F496629C1EB010072C3C9 /* exolve_example.entitlements */,
 				92911DCB2979256300CDEFD8 /* exolve-example-Info.plist */,
 				92911DEE29801DC900CDEFD8 /* fonts */,
-				92EAED31295AC1F80096239E /* Preview Content */,
+				921E16352C4A4F4100BA4059 /* resources */,
 				9215A8212AEA9BE9001AFF95 /* utils */,
 				9215A8202AEA9B61001AFF95 /* views */,
 			);
 			path = exolve_example;
-			sourceTree = "<group>";
-		};
-		92EAED31295AC1F80096239E /* Preview Content */ = {
-			isa = PBXGroup;
-			children = (
-				92EAED32295AC1F80096239E /* Preview Assets.xcassets */,
-			);
-			path = "Preview Content";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -215,6 +213,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 92EAED36295AC1F80096239E /* Build configuration list for PBXNativeTarget "exolve_example" */;
 			buildPhases = (
+				9266EC6C2AFD2C4600768C23 /* Settings */,
 				92EAED24295AC1F60096239E /* Sources */,
 				92EAED25295AC1F60096239E /* Frameworks */,
 				92EAED26295AC1F60096239E /* Resources */,
@@ -223,12 +222,10 @@
 			buildRules = (
 			);
 			dependencies = (
-				9266EC6A2AFD26E800768C23 /* PBXTargetDependency */,
 			);
 			name = exolve_example;
 			packageProductDependencies = (
-				C81F96F02B30893700C8CE52 /* ExolveVoiceSDK */,
-				A579D3022BF3C86300915168 /* ExolveVoiceSDK */,
+				C82984FA2C627623000FBB51 /* ExolveVoiceSDK */,
 			);
 			productName = exolve_example;
 			productReference = 92EAED28295AC1F60096239E /* exolve_example.app */;
@@ -260,7 +257,7 @@
 			);
 			mainGroup = 92EAED1F295AC1F60096239E;
 			packageReferences = (
-				A579D3012BF3C86300915168 /* XCRemoteSwiftPackageReference "mobile-voice-sdk" */,
+				C82984F92C627623000FBB51 /* XCRemoteSwiftPackageReference "mobile-voice-sdk" */,
 			);
 			productRefGroup = 92EAED29295AC1F60096239E /* Products */;
 			projectDirPath = "";
@@ -277,12 +274,34 @@
 			buildActionMask = 2147483647;
 			files = (
 				92911DFE298021A400CDEFD8 /* mtswide_regular.ttf in Resources */,
-				92EAED33295AC1F80096239E /* Preview Assets.xcassets in Resources */,
 				92EAED30295AC1F80096239E /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		9266EC6C2AFD2C4600768C23 /* Settings */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 12;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = Settings;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		92EAED24295AC1F60096239E /* Sources */ = {
@@ -311,18 +330,12 @@
 				92911E032982CDF400CDEFD8 /* CallsView.swift in Sources */,
 				92BCB9EE2976D4D5009ABD67 /* CallClientWrapper.swift in Sources */,
 				92622C85295C570200953BDA /* DialerView.swift in Sources */,
+				928566312C11BD7E00309B41 /* OnDropActionSelectorView.swift in Sources */,
 				9215A8232AEAA133001AFF95 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		9266EC6A2AFD26E800768C23 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			productRef = 9266EC692AFD26E800768C23 /* ExolveVoiceSDK */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		92EAED34295AC1F80096239E /* Debug */ = {
@@ -357,8 +370,9 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -417,6 +431,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -446,17 +461,19 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = exolve_example/exolve_example.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"exolve_example/Preview Content\"";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = KL42TSU837;
 				ENABLE_PREVIEWS = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/frameworks",
 				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "exolve-example-Info.plist";
@@ -478,15 +495,17 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.exolve.demoapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = exolve_demoapp_adhoc;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = exolve_demoapp_development;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "exolve_example-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = NO;
 			};
 			name = Debug;
 		};
@@ -497,17 +516,18 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = exolve_example/exolve_example.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"exolve_example/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = KL42TSU837;
 				ENABLE_PREVIEWS = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/frameworks",
 				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "exolve-example-Info.plist";
@@ -529,10 +549,11 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.exolve.demoapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = exolve_demoapp_adhoc;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = exolve_demoapp_development;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "exolve_example-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
@@ -564,37 +585,20 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		9215A8242AFBC43E001AFF95 /* XCRemoteSwiftPackageReference "exolve-voice-sdk" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/zaitsevdm/exolve-voice-sdk";
-			requirement = {
-				branch = main;
-				kind = branch;
-			};
-		};
-		A579D3012BF3C86300915168 /* XCRemoteSwiftPackageReference "mobile-voice-sdk" */ = {
+		C82984F92C627623000FBB51 /* XCRemoteSwiftPackageReference "mobile-voice-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/mtsexolve/mobile-voice-sdk";
 			requirement = {
 				kind = exactVersion;
-				version = 1.2.0;
+				version = 1.4.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		9266EC692AFD26E800768C23 /* ExolveVoiceSDK */ = {
+		C82984FA2C627623000FBB51 /* ExolveVoiceSDK */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 9215A8242AFBC43E001AFF95 /* XCRemoteSwiftPackageReference "exolve-voice-sdk" */;
-			productName = ExolveVoiceSDK;
-		};
-		A579D3022BF3C86300915168 /* ExolveVoiceSDK */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = A579D3012BF3C86300915168 /* XCRemoteSwiftPackageReference "mobile-voice-sdk" */;
-			productName = ExolveVoiceSDK;
-		};
-		C81F96F02B30893700C8CE52 /* ExolveVoiceSDK */ = {
-			isa = XCSwiftPackageProductDependency;
+			package = C82984F92C627623000FBB51 /* XCRemoteSwiftPackageReference "mobile-voice-sdk" */;
 			productName = ExolveVoiceSDK;
 		};
 /* End XCSwiftPackageProductDependency section */

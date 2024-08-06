@@ -4,6 +4,7 @@ struct CallItem: View {
     @ObservedObject var data: CallData
     @ObservedObject var activeCall: CallData
     var index: Int
+    @Binding var onDropData: OnDropData?
 
     private let client = CallClientWrapper.instance
 
@@ -16,7 +17,7 @@ struct CallItem: View {
                 .cornerRadius(10)
 
             HStack {
-                if data.call.state == .CS_Connected || data.call.state == .CS_OnHold {
+                if data.call.state == .CS_Connected || data.call.state == .CS_OnHold || data.call.state == .CS_LostConnection {
                     getCallIcon()
                 }
 
@@ -90,13 +91,16 @@ struct CallItem: View {
                         let callId = NSString(data: item, encoding: NSUTF8StringEncoding)! as String
                         NSLog("\(logtag) drop item id \(callId)")
                         if data.call.identifier != callId {
-                            data.call.createConference(callId)
+                            if let secondCall = client.calls.first(where: {$0.call.identifier == callId}) {
+                                onDropData = OnDropData(first: data, second: secondCall)
+                            }
                         }
                     }
                 }
             }
             return true
         }
+
     }
 
     func onTap() {
@@ -140,6 +144,14 @@ struct CallItem: View {
                 .foregroundColor(.gray)
                 .frame(width: 25, height: 25, alignment: .center)
                 .padding(.leading))
+        case .CS_LostConnection:
+            return AnyView(Image(systemName: Images.CallLostConnection)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .foregroundColor(.black)
+                .frame(width: 40, height: 40, alignment: .center)
+                .padding(.leading)
+            )
         default:
             return AnyView(Circle()
                 .fill(Color.clear)

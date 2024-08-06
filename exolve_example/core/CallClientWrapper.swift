@@ -131,17 +131,6 @@ class CallClientWrapper: ObservableObject, RegistrationDelegate, CallsDelegate {
         }
     }
 
-    private func setCallState(_ call: Call) {
-        for stored in calls {
-            if call == stored.call {
-                stored.state = call.state
-            }
-        }
-
-        let info = ["call": call, "state": call.state] as [String : Any]
-        NotificationCenter.default.post(name: .call, object: nil, userInfo: info)
-    }
-
     private func removeCall(_ call: Call!) {
         if let call {
             for (i, stored) in calls.enumerated() {
@@ -195,11 +184,20 @@ class CallClientWrapper: ObservableObject, RegistrationDelegate, CallsDelegate {
         NSLog("\(logtag) speaker is on: \(isSpeakerOn)")
     }
 
-    func callTransfer(call: Call!, targetId: String) {
-        NSLog("\(logtag) call transfer to targetId = \(targetId)")
+    func callTransfer(call: Call!, toNumber: String) {
+        NSLog("\(logtag) call transfer to number \(toNumber)")
         for stored in calls {
             if call == stored.call {
-                call.transfer(targetId)
+                call.transfer(toNumber: toNumber)
+            }
+        }
+    }
+
+    func callTransfer(call: Call!, toCall: String) {
+        NSLog("\(logtag) call transfer to call \(toCall)")
+        for stored in calls {
+            if call == stored.call {
+                call.transfer(toCall: toCall)
             }
         }
     }
@@ -242,26 +240,48 @@ class CallClientWrapper: ObservableObject, RegistrationDelegate, CallsDelegate {
         UserDefaults.standard.set(enabled, forKey: UserKey.Location);
     }
 
+    private func updateCallState(_ call: Call) {
+        NSLog("\(logtag) call state: \(call.state.stringValue) for \"\(call.number ?? "null")\"")
+        for stored in calls {
+            if call == stored.call {
+                stored.state = call.state
+            }
+        }
+
+        let info = ["call": call, "state": call.state] as [String : Any]
+        NotificationCenter.default.post(name: .call, object: nil, userInfo: info)
+    }
+
+    private func updateRegistrationState(_ error:RegistrationError? = nil,_ errorMessage: String? = nil) {
+        registrationState = callClient.registrationState()
+        if let error = error, let errorMessage = errorMessage {
+            NSLog("\(logtag) registration error: \(error.stringValue), \(errorMessage)")
+            Alert.show("Error", "\(error.stringValue)\n\(errorMessage)")
+        } else {
+            NSLog("\(logtag) registration state: \(registrationState.stringValue)")
+        }
+    }
+
     //MARK: calls delegate here
     internal func callNew(_ call: Call!) {
         if let call {
             NSLog("\(logtag) call new")
             calls.append(CallData(call))
-            setCallState(call)
+            updateCallState(call)
         }
     }
 
     internal func callConnected(_ call: Call!) {
         if let call {
             NSLog("\(logtag) call connected")
-            setCallState(call)
+            updateCallState(call)
         }
     }
 
     internal func callHold(_ call: Call!) {
         if let call {
             NSLog("\(logtag) call hold")
-            setCallState(call)
+            updateCallState(call)
             updateConferenceState()
         }
     }
@@ -269,7 +289,7 @@ class CallClientWrapper: ObservableObject, RegistrationDelegate, CallsDelegate {
     internal func callDisconnected(_ call: Call!) {
         if let call {
             NSLog("\(logtag) call disconnected")
-            setCallState(call)
+            updateCallState(call)
             removeCall(call)
             updateConferenceState()
         }
@@ -279,9 +299,15 @@ class CallClientWrapper: ObservableObject, RegistrationDelegate, CallsDelegate {
         NSLog("\(logtag) call error: \(error.stringValue), \(message)")
         Alert.show("Error", "\(message.isEmpty ? error.stringValue : message)")
         if let call {
-            setCallState(call)
+            updateCallState(call)
             removeCall(call)
         }
+    }
+    
+    internal func callConnectionLost(_ call: Call!) {
+        NSLog("\(logtag) call connection lost")
+        updateCallState(call)
+        updateConferenceState()
     }
 
     internal func call(_ call: Call!, inConference: Bool) {
@@ -340,39 +366,29 @@ class CallClientWrapper: ObservableObject, RegistrationDelegate, CallsDelegate {
         }
     }
 
-    private func updateState(_ error:RegistrationError? = nil,_ errorMessage: String? = nil) {
-        registrationState = callClient.registrationState()
-        if let error = error, let errorMessage = errorMessage {
-            NSLog("\(logtag) error: \(error.stringValue), \(errorMessage)")
-            Alert.show("Error", "\(error.stringValue)\n\(errorMessage)")
-        } else {
-            NSLog("\(logtag) \(registrationState.stringValue)")
-        }
-    }
-
     //MARK: registration delegate here
     internal func registered() {
-        updateState()
+        updateRegistrationState()
     }
 
     internal func registering() {
-        updateState()
+        updateRegistrationState()
     }
 
     internal func notRegistered() {
-        updateState()
+        updateRegistrationState()
     }
 
     internal func offline() {
-        updateState()
+        updateRegistrationState()
     }
 
     internal func noConnection() {
-        updateState()
+        updateRegistrationState()
     }
 
     internal func registrationError(_ error: RegistrationError, message: String) {
-        updateState(error, message)
+        updateRegistrationState(error, message)
     }
 
 }
