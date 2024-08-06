@@ -5,7 +5,7 @@ struct CallsKeyboard: View {
     @ObservedObject var activeCall: CallData
     @ObservedObject private var client = CallClientWrapper.instance
 
-    var contactPicker = ContactPickerView()
+    private let contactPicker = ContactPickerView()
 
     private let logtag = "CallsKeyboard:"
 
@@ -105,7 +105,7 @@ struct CallsKeyboard: View {
         contactPicker.selectPhoneNumber = { (selectedNumber : String?) in
             NSLog("\(logtag) number for transfer to: \(selectedNumber ?? "null")")
             if let number = selectedNumber {
-                client.callTransfer(call: activeCall.call, targetId: number)
+                client.callTransfer(call: activeCall.call, toNumber: number)
             }
         }
         contactPicker.pickContact()

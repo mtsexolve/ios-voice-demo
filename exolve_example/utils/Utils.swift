@@ -49,6 +49,16 @@ extension RegistrationError {
                 "other error"][rawValue]
     }
 }
+extension CallState {
+    var stringValue: String {
+        return ["new call",
+                "connected",
+                "on hold",
+                "terminated",
+                "error",
+                "lost connection"][rawValue]
+    }
+}
 
 extension CallError {
     var stringValue: String {

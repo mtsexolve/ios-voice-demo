@@ -27,6 +27,14 @@ struct Strings {
     static let CallLocation = "Call location"
     static let NotificationOpenAppTitle = "Action required"
     static let NotificationOpenAppBody = "Open the app to accept a call"
+    static let CallsActionConference = "Сombine calls"
+    static let CallsActionConferenceHint = "Create a conference"
+    static let CallsActionTransfer = "Transfer call"
+    static let CallsActionTransferHint = "Merge calls and leave conversation"
+    static let ClearLogsTitle = "Clear logs"
+    static let ClearLogsMessage = "Do you want to remove old log files?"
+    static let ClearLogsConfirm = "Confirm"
+    static let ClearLogsCancel = "Cancel"
 }
 
 struct Images {
@@ -39,6 +47,7 @@ struct Images {
     static let CallHold = "pause.fill"
     static let CallResume = "phone.fill"
     static let CallActive = "speaker.wave.3"
+    static let CallLostConnection = "wifi.slash"
     static let Pause = "pause"
     static let CallMuteFill = "mic.slash.fill"
     static let Keys3x3 = "square.grid.3x3"
@@ -50,4 +59,6 @@ struct Images {
     static let Backspace = "delete.left"
     static let InfoCircle = "info.circle"
     static let Back = "arrow.backward"
+    static let Contacts = "person.crop.circle"
 }
+

@@ -2,15 +2,17 @@ import SwiftUI
 
 struct DialerView: View {
     @State var callNumber = CallClientWrapper.instance.lastCall
+    private let contactPicker = ContactPickerView()
 
     var body: some View {
         VStack {
             TextField("", text: $callNumber)
+                .minimumScaleFactor(0.75)
                 .lineLimit(1)
                 .multilineTextAlignment(.center)
                 .disabled(true)
                 .foregroundColor(.black)
-
+                .minimumScaleFactor(0.7)
             HStack {
                 DialerButton(action: {onNumber("1")}, color: grey, label: Text("1"))
                     .accessibilityIdentifier("DialerButton1")
@@ -44,9 +46,10 @@ struct DialerView: View {
                     .accessibilityIdentifier("DialerButton#")
             }
             HStack {
-                Circle()
-                    .fill(Color.clear)
-                    .frame(width: 77, height: 77, alignment: .center)
+                let contacts = Image(systemName: Images.Contacts)
+                    .font(.custom("", size: 36))
+                DialerButton(action: onContacts, color: nil, label: contacts)
+                    .accessibilityIdentifier("DialerButtonContacts")
                 DialerButton(action: onCall, color: green, label: Image(systemName: Images.CallResume))
                     .foregroundColor(.white)
                     .accessibilityIdentifier("DialerButtonCall")
@@ -59,18 +62,27 @@ struct DialerView: View {
         .font(font_mts).foregroundColor(.black)
     }
 
-    func onNumber(_ char: String) {
+    private func onNumber(_ char: String) {
         callNumber += char
     }
 
-    func onDel() {
+    private func onDel() {
         if !callNumber.isEmpty {
             callNumber.removeLast()
         }
     }
 
-    func onCall() {
+    private func onCall() {
         CallClientWrapper.instance.callToNumber(number: callNumber)
+    }
+
+    private func onContacts() {
+        contactPicker.selectPhoneNumber = { (selectedNumber : String?) in
+            if let number = selectedNumber {
+                callNumber = number
+            }
+        }
+        contactPicker.pickContact()
     }
 
 }

@@ -27,6 +27,18 @@ class SharingProvider {
         }
     }
 
+    func removeOldFiles() {
+        if let dir = getDocDirectory() {
+            for prefix in ["sdk", "voip"] {
+                try? FileManager.default.contentsOfDirectory(at: dir, includingPropertiesForKeys: nil)
+                .filter({$0.lastPathComponent.hasPrefix(prefix)})
+                .sorted(by: {$0.lastPathComponent < $1.lastPathComponent})
+                .dropLast()
+                .forEach() { try? FileManager.default.removeItem(at: $0) }
+            }
+        }
+    }
+
     private func getDocDirectory() -> URL? {
         let dir = try? FileManager.default.url(
             for: .documentDirectory, in: .userDomainMask,
