@@ -31,6 +31,8 @@ class CallClientWrapper: ObservableObject, RegistrationDelegate, CallsDelegate {
 
     private let logtag = "CallClientWrapper:"
 
+    private var activeAppObserver: (any NSObjectProtocol)? = nil
+
     private init() {
         let prefs = UserDefaults.standard
         login = prefs.string(forKey: UserKey.Login) ?? ""
@@ -362,6 +364,19 @@ class CallClientWrapper: ObservableObject, RegistrationDelegate, CallsDelegate {
                 }
             } else if status == .restricted || status == .denied {
                 call.accept() // force SDK to fail on error
+            } else if UIApplication.shared.applicationState != .active {
+                //not enough permission wait till the application will be active
+                NSLog("\(logtag) active app required to accepted the call")
+                activeAppObserver = NotificationCenter.default.addObserver(
+                    forName: UIScene.didActivateNotification,
+                    object: nil,
+                    queue: OperationQueue.main) { [self, weak call] _ in
+                        call?.accept()
+                        if let observer = activeAppObserver {
+                            NotificationCenter.default.removeObserver(observer)
+                            activeAppObserver = nil
+                        }
+                    }
             }
         }
     }

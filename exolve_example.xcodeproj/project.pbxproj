@@ -34,7 +34,7 @@
 		92EAED30295AC1F80096239E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 92EAED2F295AC1F80096239E /* Assets.xcassets */; };
 		92EF6F6E2BA880AB0043D2E3 /* RouteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92EF6F6D2BA880AB0043D2E3 /* RouteButton.swift */; };
 		A530E1FB29C1A361007997F5 /* DtmfView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A530E1F929C1A361007997F5 /* DtmfView.swift */; };
-		C82984FB2C627623000FBB51 /* ExolveVoiceSDK in Frameworks */ = {isa = PBXBuildFile; productRef = C82984FA2C627623000FBB51 /* ExolveVoiceSDK */; };
+		C8C4F3892C7CF294007E8020 /* ExolveVoiceSDK in Frameworks */ = {isa = PBXBuildFile; productRef = C8C4F3882C7CF294007E8020 /* ExolveVoiceSDK */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -89,8 +89,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C82984FB2C627623000FBB51 /* ExolveVoiceSDK in Frameworks */,
 				92622CA7295DBF0C00953BDA /* AVFAudio.framework in Frameworks */,
+				C8C4F3892C7CF294007E8020 /* ExolveVoiceSDK in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -225,7 +225,7 @@
 			);
 			name = exolve_example;
 			packageProductDependencies = (
-				C82984FA2C627623000FBB51 /* ExolveVoiceSDK */,
+				C8C4F3882C7CF294007E8020 /* ExolveVoiceSDK */,
 			);
 			productName = exolve_example;
 			productReference = 92EAED28295AC1F60096239E /* exolve_example.app */;
@@ -257,7 +257,7 @@
 			);
 			mainGroup = 92EAED1F295AC1F60096239E;
 			packageReferences = (
-				C82984F92C627623000FBB51 /* XCRemoteSwiftPackageReference "mobile-voice-sdk" */,
+				C8C4F3872C7CF294007E8020 /* XCRemoteSwiftPackageReference "mobile-voice-sdk" */,
 			);
 			productRefGroup = 92EAED29295AC1F60096239E /* Products */;
 			projectDirPath = "";
@@ -585,20 +585,20 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		C82984F92C627623000FBB51 /* XCRemoteSwiftPackageReference "mobile-voice-sdk" */ = {
+		C8C4F3872C7CF294007E8020 /* XCRemoteSwiftPackageReference "mobile-voice-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/mtsexolve/mobile-voice-sdk";
 			requirement = {
-				kind = exactVersion;
-				version = 1.4.0;
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.5.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		C82984FA2C627623000FBB51 /* ExolveVoiceSDK */ = {
+		C8C4F3882C7CF294007E8020 /* ExolveVoiceSDK */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = C82984F92C627623000FBB51 /* XCRemoteSwiftPackageReference "mobile-voice-sdk" */;
+			package = C8C4F3872C7CF294007E8020 /* XCRemoteSwiftPackageReference "mobile-voice-sdk" */;
 			productName = ExolveVoiceSDK;
 		};
 /* End XCSwiftPackageProductDependency section */
