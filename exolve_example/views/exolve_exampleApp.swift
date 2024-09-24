@@ -13,7 +13,36 @@ struct exolve_exampleApp: App {
     }
 }
 
-class AppDelegate: NSObject, UIApplicationDelegate {
+class SceneDelegate: UIResponder, UIWindowSceneDelegate, ObservableObject {
+    var window: UIWindow?
+    @Published var authorizationString: String = ""
+    private let logtag = "SceneDelegate:"
+
+    func scene(_ scene: UIScene,
+               willConnectTo session: UISceneSession,
+               options connectionOptions: UIScene.ConnectionOptions) {
+        NSLog("\(logtag) Scene will connect to session")
+        if let url = connectionOptions.urlContexts.first?.url {
+            putAuthorizationString(url:url)
+        }
+        else if let url = connectionOptions.userActivities.first?.webpageURL {
+            putAuthorizationString(url:url)
+        }
+    }
+
+    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        if let url = URLContexts.first?.url {
+            putAuthorizationString(url:url)
+        }
+    }
+
+    private func putAuthorizationString(url : URL) {
+        NSLog("\(logtag) Incoming URL:\(url)")
+        authorizationString = url.host ?? "" + url.path
+    }
+}
+
+class AppDelegate: UIResponder, UIApplicationDelegate {
     private let logtag = "AppDelegate:"
 
     func application(_ application: UIApplication,
@@ -37,6 +66,16 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         }
 
         return true
+    }
+
+    func application(
+      _ application: UIApplication,
+      configurationForConnecting connectingSceneSession: UISceneSession,
+      options: UIScene.ConnectionOptions
+    ) -> UISceneConfiguration {
+      let sceneConfig = UISceneConfiguration(name: nil, sessionRole: connectingSceneSession.role)
+      sceneConfig.delegateClass = SceneDelegate.self
+      return sceneConfig
     }
 
 }
