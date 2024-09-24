@@ -1,4 +1,5 @@
 import SwiftUI
+import Combine
 
 struct AccountView: View {
     @State private var login: String
@@ -6,6 +7,7 @@ struct AccountView: View {
     @State private var location = CallClientWrapper.instance.locationServiceEnabled
     @State private var shouldShowClearLogsAlert: Bool = false
     @ObservedObject private var client = CallClientWrapper.instance
+    @EnvironmentObject var sceneDelegate: SceneDelegate
 
     var body: some View {
         ZStack {
@@ -32,7 +34,6 @@ struct AccountView: View {
                         .cornerRadius(10)
                         .foregroundColor(red)
                     )
-
                     Spacer()
                     if !client.pushToken.isEmpty {
                         VStack {
@@ -88,6 +89,30 @@ struct AccountView: View {
             primaryButton: SwiftUI.Alert.Button.destructive(Text(Strings.ClearLogsConfirm), action: onClearLogs),
             secondaryButton: SwiftUI.Alert.Button.cancel(Text(Strings.ClearLogsCancel), action: { shouldShowClearLogsAlert = false }))
         })
+        .onReceive(sceneDelegate.$authorizationString) { newValue in
+            if newValue.isEmpty {
+                return
+            }
+            if let dIndex = newValue.firstIndex(of: "&") {
+                login = String(newValue[..<dIndex])
+                password = String(newValue[newValue.index(after: dIndex)...])
+                if client.registrationState != .RS_NotRegistered {
+                    var sub: AnyCancellable?
+                    sub = client.$registrationState.sink { newValue in
+                        print("sink registration state changed: \(newValue)")
+                        if newValue == RegistrationState.RS_NotRegistered {
+                            client.register(login, password)
+                            if let _ = sub {
+                                sub = nil
+                            }
+                        }
+                    }
+                    client.unregister()
+                } else {
+                    client.register(login, password)
+                }
+            }
+         }
     }
 
     init() {

@@ -3,7 +3,7 @@ import Foundation
 final class CallData: ObservableObject {
     var call: Call!
     var callId: String { get {return call.identifier} }
-    var number: String { get {return call.number} }
+    var number: String { get {return call.formattedNumber} }
     @Published var state: CallState
     @Published var mute: Bool
     @Published var locationAccessRequired: Bool
