@@ -590,7 +590,7 @@
 			repositoryURL = "https://github.com/mtsexolve/mobile-voice-sdk";
 			requirement = {
 				kind = exactVersion;
-				version = 1.6.0;
+				version = 1.6.1;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
