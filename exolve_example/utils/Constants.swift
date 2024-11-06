@@ -24,7 +24,6 @@ struct Strings {
     static let SmallAsterisk = "\u{FE61}"
     static let RegistrationState = "Registration state:"
     static let BackToCall = "Back to call"
-    static let CallLocation = "Call location"
     static let NotificationOpenAppTitle = "Action required"
     static let NotificationOpenAppBody = "Open the app to accept a call"
     static let CallsActionConference = "Сombine calls"
@@ -35,6 +34,18 @@ struct Strings {
     static let ClearLogsMessage = "Do you want to remove old log files?"
     static let ClearLogsConfirm = "Confirm"
     static let ClearLogsCancel = "Cancel"
+    static let Settings = "Settings"
+    static let SettingsCallLocation = "Call location"
+    static let SettingsSipTraces = "Enable SIP traces"
+    static let SettingsLogLevel = "Log level: "
+    static let SettingsEncryption = "Use encryption"
+    static let SettingsEnvironment = "Environment"
+    static let SettingsRestart = "Restart application"
+    static let SettingsRestartWarning = "After closing the application, you will need to launch it manually"
+    static let SettingsProceed = "Proceed"
+    static let SettingsCancel = "Cancel"
+    static let Default = "default"
+
 }
 
 struct Images {
@@ -60,5 +71,6 @@ struct Images {
     static let InfoCircle = "info.circle"
     static let Back = "arrow.backward"
     static let Contacts = "person.crop.circle"
+    static let Settings = "gearshape"
 }
 

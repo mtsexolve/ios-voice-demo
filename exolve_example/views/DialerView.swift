@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct DialerView: View {
-    @State var callNumber = CallClientWrapper.instance.lastCall
+    @State var callNumber = ""
     private let contactPicker = ContactPickerView()
 
     var body: some View {
@@ -50,9 +50,22 @@ struct DialerView: View {
                     .font(.custom("", size: 36))
                 DialerButton(action: onContacts, color: nil, label: contacts)
                     .accessibilityIdentifier("DialerButtonContacts")
-                DialerButton(action: onCall, color: green, label: Image(systemName: Images.CallResume))
-                    .foregroundColor(.white)
-                    .accessibilityIdentifier("DialerButtonCall")
+
+                Button(action: {}) {
+                    ZStack {
+                        Circle()
+                            .fill(green)
+                            .frame(width: 77, height: 77, alignment: .center)
+                            .onTapGesture { onCall() }
+                            .onLongPressGesture(minimumDuration: 0.3) {
+                                callNumber = CallClientWrapper.instance.lastCall
+                            }
+                        Image(systemName: Images.CallResume)
+                    }
+                }
+                .foregroundColor(.white)
+                .accessibilityIdentifier("DialerButtonCall")
+
                 DialerButton(action: onDel, color: nil, label: Image(systemName: Images.Backspace))
                     .simultaneousGesture(LongPressGesture(minimumDuration: 1)
                     .onEnded { _ in callNumber = "" })

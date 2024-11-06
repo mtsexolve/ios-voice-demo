@@ -21,48 +21,40 @@ class CallClientWrapper: ObservableObject, RegistrationDelegate, CallsDelegate {
     public static let instance = CallClientWrapper()
     private var communicator: Communicator
     private var callClient: CallClient
-
-    private struct UserKey {
-        static let Login = "login"
-        static let Password = "password"
-        static let LastCall = "last_call"
-        static let Location = "location"
-    }
+    private var durationTimer: Timer?
 
     private let logtag = "CallClientWrapper:"
 
     private var activeAppObserver: (any NSObjectProtocol)? = nil
 
     private init() {
-        let prefs = UserDefaults.standard
-        login = prefs.string(forKey: UserKey.Login) ?? ""
-        password = prefs.string(forKey: UserKey.Password) ?? ""
-        lastCall = prefs.string(forKey: UserKey.LastCall) ?? ""
-        let useLocation = prefs.object(forKey: UserKey.Location) as? Bool ?? true
-        NSLog("\(logtag) location services will be \(useLocation ? "en" : "dis")abled")
-        locationServiceEnabled = useLocation
+        login = Storage.login
+        password = Storage.password
+        lastCall = Storage.lastCall
+        locationServiceEnabled = Storage.location
+        NSLog("\(logtag) location services will be \(locationServiceEnabled ? "en" : "dis")abled")
 
         let config = ExolveVoiceSDK.Configuration.default()
-        config?.logConfiguration.logLevel = .LL_Debug
-        config?.enableSipTrace = true
-        config?.callKitConfiguration = CallKitConfiguration.default()
-        config?.callKitConfiguration.notifyInForeground = true
-        config?.callKitConfiguration.contactSearchHandler = contactSearchHandler
-        config?.enableDetectCallLocation = useLocation
+        config.logConfiguration.logLevel = Storage.logLevel
+        config.enableSipTrace = Storage.sipTraces
+        config.useSecureConnection = Storage.encryption
+        config.callKitConfiguration = CallKitConfiguration.default()
+        config.callKitConfiguration?.notifyInForeground = true
+        config.callKitConfiguration?.contactSearchHandler = contactSearchHandler
+        config.enableDetectCallLocation = locationServiceEnabled
 
-        communicator = Communicator(configuration: config)
+        communicator = Communicator(configuration: config, environment:Storage.environment)
 
         callClient = communicator.callClient()
         registrationState = callClient.registrationState()
 
         let sdkVersionInfo : VersionInfo = communicator.getVersionInfo()
-        versionDescription = "SDK ver.\(sdkVersionInfo.buildVersion) env: \((!sdkVersionInfo.environment.isEmpty) ? sdkVersionInfo.environment : "default" )"
+        versionDescription = "SDK ver.\(sdkVersionInfo.buildVersion) env: \((!sdkVersionInfo.environment.isEmpty) ? sdkVersionInfo.environment : Strings.Default )"
 
         callClient.setRegistrationDelegate(self, with: DispatchQueue.main)
         callClient.setCallsDelegate(self, with: DispatchQueue.main)
 
-        communicator.retrieveVoipPushToken { [self] (str: String?) in
-            let token = str ?? ""
+        communicator.retrieveVoipPushToken { [self] (token: String) in
             NSLog("\(logtag) retrieved voip push token \"\(token)\"")
             pushToken = token
         }
@@ -78,9 +70,8 @@ class CallClientWrapper: ObservableObject, RegistrationDelegate, CallsDelegate {
     }
 
     func register(_ login: String, _ password: String) {
-        let prefs = UserDefaults.standard
-        prefs.set(login, forKey: UserKey.Login);
-        prefs.set(password, forKey: UserKey.Password);
+        Storage.login = login
+        Storage.password = password
         self.login = login
         self.password = password
 
@@ -97,8 +88,8 @@ class CallClientWrapper: ObservableObject, RegistrationDelegate, CallsDelegate {
     }
 
     func callToNumber(number: String) {
+        Storage.lastCall = number
         lastCall = number
-        UserDefaults.standard.set(number, forKey: UserKey.LastCall);
 
         let session = AVAudioSession.sharedInstance()
         switch (session.recordPermission) {
@@ -239,11 +230,11 @@ class CallClientWrapper: ObservableObject, RegistrationDelegate, CallsDelegate {
         NSLog("\(logtag) location services \(enabled ? "en" : "dis")abled")
         communicator.configurationManager().setDetectCallLocationEnabled(enabled)
         locationServiceEnabled = enabled
-        UserDefaults.standard.set(enabled, forKey: UserKey.Location);
+        Storage.location = enabled
     }
 
     private func updateCallState(_ call: Call) {
-        NSLog("\(logtag) call state: \(call.state.stringValue) for \"\(call.number ?? "null")\"")
+        NSLog("\(logtag) call state: \(call.state.stringValue) for \"\(call.number)\"")
         for stored in calls {
             if call == stored.call {
                 stored.state = call.state
@@ -264,60 +255,76 @@ class CallClientWrapper: ObservableObject, RegistrationDelegate, CallsDelegate {
         }
     }
 
+    private func checkToggleMeasurements() {
+        if calls.filter({ $0.isAlive }).isEmpty {
+            if durationTimer != nil {
+                durationTimer!.invalidate()
+                durationTimer = nil
+            }
+        } else {
+            if durationTimer == nil {
+                let increment = { [self] (_: Timer) in
+                    calls.forEach { call in
+                        call.updateStatistics()
+                    }
+                }
+                durationTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: increment)
+            }
+        }
+    }
+
+    func getAvailableEnvironments() -> [String] {
+        let arr = [Strings.Default] + (Communicator.getAvailableEnvironments() ?? [])
+        return arr
+    }
+
     //MARK: calls delegate here
-    internal func callNew(_ call: Call!) {
-        if let call {
-            NSLog("\(logtag) call new")
-            calls.append(CallData(call))
-            updateCallState(call)
-        }
+    internal func callNew(_ call: Call) {
+        NSLog("\(logtag) call new")
+        calls.append(CallData(call))
+        updateCallState(call)
     }
 
-    internal func callConnected(_ call: Call!) {
-        if let call {
-            NSLog("\(logtag) call connected")
-            updateCallState(call)
-        }
+    internal func callConnected(_ call: Call) {
+        NSLog("\(logtag) call connected")
+        updateCallState(call)
+        checkToggleMeasurements()
     }
 
-    internal func callHold(_ call: Call!) {
-        if let call {
-            NSLog("\(logtag) call hold")
-            updateCallState(call)
-            updateConferenceState()
-        }
+    internal func callHold(_ call: Call) {
+        NSLog("\(logtag) call hold")
+        updateCallState(call)
+        updateConferenceState()
     }
 
-    internal func callDisconnected(_ call: Call!) {
-        if let call {
-            NSLog("\(logtag) call disconnected")
-            updateCallState(call)
-            removeCall(call)
-            updateConferenceState()
-        }
+    internal func callDisconnected(_ call: Call) {
+        NSLog("\(logtag) call disconnected")
+        updateCallState(call)
+        removeCall(call)
+        updateConferenceState()
+        checkToggleMeasurements()
     }
 
-    internal func callError(_ call: Call!, error: CallError, message: String) {
+    internal func callError(_ call: Call, error: CallError, message: String) {
         NSLog("\(logtag) call error: \(error.stringValue), \(message)")
         Alert.show("Error", "\(message.isEmpty ? error.stringValue : message)")
-        if let call {
-            updateCallState(call)
-            removeCall(call)
-        }
+        updateCallState(call)
+        removeCall(call)
+        checkToggleMeasurements()
     }
     
-    internal func callConnectionLost(_ call: Call!) {
+    internal func callConnectionLost(_ call: Call) {
         NSLog("\(logtag) call connection lost")
         updateCallState(call)
         updateConferenceState()
     }
 
-    internal func call(_ call: Call!, inConference: Bool) {
-        NSLog("\(logtag) call \(call?.identifier ?? ""), in conference: \(inConference)")
+    internal func call(_ call: Call, inConference: Bool) {
+        NSLog("\(logtag) call \(call.identifier), in conference: \(inConference)")
         updateConferenceState()
     }
 
-    internal func callMuted(_ call: Call!) {
+    internal func callMuted(_ call: Call) {
         NSLog("\(logtag) call \(call.isMuted ? "" : "un")muted")
         for stored in calls {
             if call == stored.call {
@@ -327,7 +334,7 @@ class CallClientWrapper: ObservableObject, RegistrationDelegate, CallsDelegate {
         }
     }
 
-    internal func callUserActionRequired(_ call: Call!, pendingEvent: CallPendingEvent, requiredAction: CallUserAction) {
+    internal func callUserActionRequired(_ call: Call, pendingEvent: CallPendingEvent, requiredAction: CallUserAction) {
         NSLog("\(logtag) action required: \(pendingEvent) \(requiredAction)")
 
         if pendingEvent == .CPE_IncomingCall {
@@ -358,7 +365,7 @@ class CallClientWrapper: ObservableObject, RegistrationDelegate, CallsDelegate {
                     let action = { [self, call] in
                         NSLog("\(logtag) accepting incoming call")
                         calls.forEach() { $0.locationAccessRequired = false}
-                        call?.accept()
+                        call.accept()
                     }
                     LocationAccessProvider.instance.requestAuthorization(deferredAction: action)
                 }

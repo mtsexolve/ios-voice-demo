@@ -133,9 +133,7 @@ func findContactName(_ callNumber: String) -> String? {
     return nil
 }
 
-func contactSearchHandler(_ callNumber: String?, _ callback: ((String?) -> Void)?) -> Void  {
-    guard let callNumber else { return }
-    guard let callback else { return }
+func contactSearchHandler(_ callNumber: String, _ callback: (String) -> Void) -> Void  {
     let format = "+X (XXX) XXX-XXXX"
     if CNContactStore.authorizationStatus(for: .contacts) == .authorized {
         callback(findContactName(callNumber) ?? formatCallNumber(callNumber, format))

@@ -35,7 +35,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, ObservableObject {
             putAuthorizationString(url:url)
         }
     }
-
+    
     private func putAuthorizationString(url : URL) {
         NSLog("\(logtag) Incoming URL:\(url)")
         authorizationString = url.host ?? "" + url.path
@@ -44,6 +44,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, ObservableObject {
 
 class AppDelegate: UIResponder, UIApplicationDelegate {
     private let logtag = "AppDelegate:"
+
 
     func application(_ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
@@ -67,6 +68,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         return true
     }
+    
 
     func application(
       _ application: UIApplication,

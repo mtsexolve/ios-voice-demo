@@ -17,7 +17,7 @@ struct CallItem: View {
                 .cornerRadius(10)
 
             HStack {
-                if data.call.state == .CS_Connected || data.call.state == .CS_OnHold || data.call.state == .CS_LostConnection {
+                if data.isAlive {
                     getCallIcon()
                 }
 
@@ -25,7 +25,7 @@ struct CallItem: View {
                     HStack {
                         Text(data.number)
                             .font(font_reg)
-                            .padding(.leading)
+                            .padding(.leading, data.isAlive ? 0 : nil)
 
                         Spacer()
 
@@ -33,10 +33,20 @@ struct CallItem: View {
                             Image(systemName: Images.CallMute)
                                 .foregroundColor(.gray)
                         }
+                        if data.call.state == .CS_Connected {
+                            Circle().fill(getQulityRatingFillColor()).frame(width: 10, height: 10)
+                        }
                     }
                     .padding(.vertical, 5)
 
                     HStack {
+                        if data.isAlive {
+                            Text(formatDuration(data.duration))
+                                .font(Font.custom("MTSWide-Regular", size: 14))
+                                .foregroundColor(.gray)
+                                .padding(.leading, 0)
+                        }
+
                         Spacer()
 
                         Button(action: onTerminate) {
@@ -75,7 +85,6 @@ struct CallItem: View {
                                 }
                             }.accessibilityIdentifier("CallItemButton\(index)")
                         }
-
                     }
                     .padding(.bottom, 5)
 
@@ -125,6 +134,19 @@ struct CallItem: View {
     func getFillColor() -> Color {
         return activeCall.callId == data.callId ? Color("GrayButtonBg") : Color.white
     }
+    
+    func getQulityRatingFillColor() -> Color {
+        if data.qualityRating > 4.2 {
+            return Color.green
+        } else if data.qualityRating > 2.5 {
+            return Color.yellow
+        } else if data.qualityRating >= 0 {
+            return Color.red
+        } else {
+            return Color.clear
+        }
+    }
+    
 
     func getCallIcon() -> AnyView {
         switch (data.call.state) {
@@ -158,4 +180,16 @@ struct CallItem: View {
                 .frame(width: 77, height: 77, alignment: .center))
         }
     }
+
+    private func formatDuration(_ t: UInt) -> String {
+        if t == 0 {
+            return "00:00"
+        }
+
+        let h = t / 3600
+        let m = (t - h * 3600) / 60
+        let s = t % 60
+        return h == 0 ? String(format: "%02d:%02d", m, s) : String(format: "%02d:%02d:%02d", h, m, s)
+    }
+
 }

@@ -19,6 +19,13 @@ struct AccountCallTabView: View {
                     Text(Strings.Account)
                 }
                 .tag(1)
+            SettingsView()
+                .tabItem {
+                    Image(systemName: Images.Settings)
+                        .resizable()
+                    Text(Strings.Settings)
+                }
+                .tag(2)
         }
     }
 }

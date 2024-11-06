@@ -59,7 +59,11 @@ class SharingProvider {
                     && (url.lastPathComponent.hasPrefix("sdk")
                     || url.lastPathComponent.hasPrefix("voip")) })
                 for url in content {
-                    try? fm.copyItem(at: url, to: destDir.appendingPathComponent(url.lastPathComponent))
+                    let resources = try url.resourceValues(forKeys:[.fileSizeKey])
+                    let fileSize = resources.fileSize!
+                    if fileSize > 0 {
+                        try? fm.copyItem(at: url, to: destDir.appendingPathComponent(url.lastPathComponent))
+                    }
                 }
             } catch {
                 cleanup()
