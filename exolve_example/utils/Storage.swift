@@ -55,4 +55,5 @@ class Storage {
         set { prefs.set(newValue, forKey: Keys.Environment) }
     }
 
+    static var callIntent: String?
 }

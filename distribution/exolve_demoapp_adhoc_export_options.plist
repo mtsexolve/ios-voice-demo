@@ -10,6 +10,8 @@
 	<dict>
 		<key>com.exolve.demoapp</key>
 		<string>exolve_demoapp_adhoc</string>
+		<key>com.exolve.demoapp.callintent</key>
+		<string>exolve_demoapp_callintent_adhoc</string>
 	</dict>
 	<key>signingCertificate</key>
 	<string>36B24947BF21D25752DD2762573569E51DCDCE7D</string>

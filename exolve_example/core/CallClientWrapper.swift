@@ -43,13 +43,20 @@ class CallClientWrapper: ObservableObject, RegistrationDelegate, CallsDelegate {
         config.callKitConfiguration?.contactSearchHandler = contactSearchHandler
         config.enableDetectCallLocation = locationServiceEnabled
 
-        communicator = Communicator(configuration: config, environment:Storage.environment)
+        if Storage.environment == Strings.Default {
+            communicator = Communicator(configuration: config)
+            Storage.environment = (!communicator.getVersionInfo().environment.isEmpty) ? communicator.getVersionInfo().environment : Strings.Default
+        } else {
+            communicator = Communicator(configuration: config, environment:Storage.environment)
+        }
+
+        let sdkVersionInfo : VersionInfo = communicator.getVersionInfo()
+        versionDescription = "SDK ver.\(sdkVersionInfo.buildVersion) env: \((!sdkVersionInfo.environment.isEmpty) ? sdkVersionInfo.environment : Strings.Default )"
+        
 
         callClient = communicator.callClient()
         registrationState = callClient.registrationState()
 
-        let sdkVersionInfo : VersionInfo = communicator.getVersionInfo()
-        versionDescription = "SDK ver.\(sdkVersionInfo.buildVersion) env: \((!sdkVersionInfo.environment.isEmpty) ? sdkVersionInfo.environment : Strings.Default )"
 
         callClient.setRegistrationDelegate(self, with: DispatchQueue.main)
         callClient.setCallsDelegate(self, with: DispatchQueue.main)
@@ -297,8 +304,8 @@ class CallClientWrapper: ObservableObject, RegistrationDelegate, CallsDelegate {
         updateConferenceState()
     }
 
-    internal func callDisconnected(_ call: Call) {
-        NSLog("\(logtag) call disconnected")
+    internal func callDisconnected(_ call: Call, details: CallDisconnectDetails) {
+        NSLog("\(logtag) call disconnected: id: \(call.identifier), duration: \(details.duration), disconnectedByUser: \(details.disconnectedByUser)")
         updateCallState(call)
         removeCall(call)
         updateConferenceState()
@@ -391,6 +398,12 @@ class CallClientWrapper: ObservableObject, RegistrationDelegate, CallsDelegate {
     //MARK: registration delegate here
     internal func registered() {
         updateRegistrationState()
+        if let callIntent = Storage.callIntent {
+            if !callIntent.isEmpty {
+                placeCall(callIntent)
+            }
+            Storage.callIntent = nil
+        }
     }
 
     internal func registering() {

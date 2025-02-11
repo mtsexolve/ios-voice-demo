@@ -42,6 +42,7 @@ struct OnDropActionSelectorView: View {
                                     Text(Strings.CallsActionConferenceHint)
                                 }
                             }
+                            .accessibilityIdentifier("CreateCallConference")
                             Button (action: doTransfer) {
                                 VStack {
                                     Text(Strings.CallsActionTransfer)
@@ -49,6 +50,7 @@ struct OnDropActionSelectorView: View {
                                     Text(Strings.CallsActionTransferHint)
                                 }
                             }
+                            .accessibilityIdentifier("TransferCallWithAssistant")
                         }
                         .frame(maxWidth: .infinity)
                         .padding(10)

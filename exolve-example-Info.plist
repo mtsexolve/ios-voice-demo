@@ -13,6 +13,10 @@
 			</array>
 		</dict>
 	</array>
+	<key>INIntentsSupported</key>
+	<array>
+		<string>INStartCallIntent</string>
+	</array>
 	<key>UIAppFonts</key>
 	<array>
 		<string>mtswide_regular.ttf</string>

@@ -56,11 +56,11 @@ struct DialerView: View {
                         Circle()
                             .fill(green)
                             .frame(width: 77, height: 77, alignment: .center)
-                            .onTapGesture { onCall() }
-                            .onLongPressGesture(minimumDuration: 0.3) {
-                                callNumber = CallClientWrapper.instance.lastCall
-                            }
                         Image(systemName: Images.CallResume)
+                    }
+                    .onTapGesture { onCall() }
+                    .onLongPressGesture(minimumDuration: 0.3) {
+                        callNumber = CallClientWrapper.instance.lastCall
                     }
                 }
                 .foregroundColor(.white)

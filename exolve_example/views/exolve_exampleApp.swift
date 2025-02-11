@@ -1,4 +1,5 @@
 import SwiftUI
+import Intents
 import Contacts
 import AVFAudio
 
@@ -28,6 +29,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, ObservableObject {
         else if let url = connectionOptions.userActivities.first?.webpageURL {
             putAuthorizationString(url:url)
         }
+
+        if let activity = connectionOptions.userActivities.filter({ $0.activityType == NSStringFromClass(INStartCallIntent.self) }).first {
+            NSLog("\(logtag) found activity \(activity.activityType)")
+            putCallNumber(activity)
+        }
+
+    }
+
+    func scene(_ scene: UIScene, continue activity: NSUserActivity) {
+        NSLog("\(logtag) Scene continue with activity \(activity.activityType)")
+        putCallNumber(activity)
     }
 
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
@@ -35,11 +47,25 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, ObservableObject {
             putAuthorizationString(url:url)
         }
     }
-    
+
     private func putAuthorizationString(url : URL) {
         NSLog("\(logtag) Incoming URL:\(url)")
         authorizationString = url.host ?? "" + url.path
     }
+
+    private func putCallNumber(_ activity: NSUserActivity) {
+        if let intent = activity.interaction?.intent as? INStartCallIntent {
+            if let handle = intent.contacts?.first?.personHandle {
+                if handle.type == .phoneNumber {
+                    if let value = handle.value {
+                        Storage.callIntent = value
+                        NSLog("\(logtag) will call to \(value)")
+                    }
+                }
+            }
+        }
+    }
+
 }
 
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -68,7 +94,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         return true
     }
-    
 
     func application(
       _ application: UIApplication,

@@ -35,6 +35,7 @@ struct CallItem: View {
                         }
                         if data.call.state == .CS_Connected {
                             Circle().fill(getQulityRatingFillColor()).frame(width: 10, height: 10)
+                                .accessibilityIdentifier("CallItemQualityRating\(index)_\(getQulityRatingFillColor().description)")
                         }
                     }
                     .padding(.vertical, 5)
@@ -143,7 +144,7 @@ struct CallItem: View {
         } else if data.qualityRating >= 0 {
             return Color.red
         } else {
-            return Color.clear
+            return Color(red: 0.5, green: 0.0, blue: 0.0)
         }
     }
     

@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -34,10 +34,22 @@
 		92EAED30295AC1F80096239E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 92EAED2F295AC1F80096239E /* Assets.xcassets */; };
 		92EF6F6E2BA880AB0043D2E3 /* RouteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92EF6F6D2BA880AB0043D2E3 /* RouteButton.swift */; };
 		A530E1FB29C1A361007997F5 /* DtmfView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A530E1F929C1A361007997F5 /* DtmfView.swift */; };
+		C886608E2D5B334D0007E07A /* Intents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C886608D2D5B334D0007E07A /* Intents.framework */; };
+		C88660952D5B334D0007E07A /* callintent.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = C886608C2D5B334D0007E07A /* callintent.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		C891ACA72CDBE90D00F4FC89 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C891ACA62CDBE90D00F4FC89 /* SettingsView.swift */; };
 		C891ACA92CDBE91800F4FC89 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C891ACA82CDBE91800F4FC89 /* Storage.swift */; };
 		C8C4F3892C7CF294007E8020 /* ExolveVoiceSDK in Frameworks */ = {isa = PBXBuildFile; productRef = C8C4F3882C7CF294007E8020 /* ExolveVoiceSDK */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		C88660932D5B334D0007E07A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 92EAED20295AC1F60096239E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C886608B2D5B334D0007E07A;
+			remoteInfo = callintent;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		92622C99295DA7B100953BDA /* Embed Frameworks */ = {
@@ -48,6 +60,17 @@
 			files = (
 			);
 			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C886609A2D5B334D0007E07A /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				C88660952D5B334D0007E07A /* callintent.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -84,9 +107,25 @@
 		92EAED2F295AC1F80096239E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		92EF6F6D2BA880AB0043D2E3 /* RouteButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouteButton.swift; sourceTree = "<group>"; };
 		A530E1F929C1A361007997F5 /* DtmfView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DtmfView.swift; sourceTree = "<group>"; };
+		C886608C2D5B334D0007E07A /* callintent.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = callintent.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		C886608D2D5B334D0007E07A /* Intents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Intents.framework; path = System/Library/Frameworks/Intents.framework; sourceTree = SDKROOT; };
 		C891ACA62CDBE90D00F4FC89 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		C891ACA82CDBE91800F4FC89 /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		C88660962D5B334D0007E07A /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = C886608B2D5B334D0007E07A /* callintent */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		C886608F2D5B334D0007E07A /* callintent */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (C88660962D5B334D0007E07A /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = callintent; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		92EAED25295AC1F60096239E /* Frameworks */ = {
@@ -95,6 +134,14 @@
 			files = (
 				92622CA7295DBF0C00953BDA /* AVFAudio.framework in Frameworks */,
 				C8C4F3892C7CF294007E8020 /* ExolveVoiceSDK in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C88660892D5B334D0007E07A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C886608E2D5B334D0007E07A /* Intents.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -166,6 +213,7 @@
 			isa = PBXGroup;
 			children = (
 				92622CA6295DBF0B00953BDA /* AVFAudio.framework */,
+				C886608D2D5B334D0007E07A /* Intents.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -182,6 +230,7 @@
 			isa = PBXGroup;
 			children = (
 				92EAED2A295AC1F60096239E /* exolve_example */,
+				C886608F2D5B334D0007E07A /* callintent */,
 				92EAED29295AC1F60096239E /* Products */,
 				92622C96295DA7B100953BDA /* Frameworks */,
 				92BCB9E629759C9C009ABD67 /* exolve_example-Bridging-Header.h */,
@@ -192,6 +241,7 @@
 			isa = PBXGroup;
 			children = (
 				92EAED28295AC1F60096239E /* exolve_example.app */,
+				C886608C2D5B334D0007E07A /* callintent.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -224,10 +274,12 @@
 				92EAED25295AC1F60096239E /* Frameworks */,
 				92EAED26295AC1F60096239E /* Resources */,
 				92622C99295DA7B100953BDA /* Embed Frameworks */,
+				C886609A2D5B334D0007E07A /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				C88660942D5B334D0007E07A /* PBXTargetDependency */,
 			);
 			name = exolve_example;
 			packageProductDependencies = (
@@ -237,6 +289,28 @@
 			productReference = 92EAED28295AC1F60096239E /* exolve_example.app */;
 			productType = "com.apple.product-type.application";
 		};
+		C886608B2D5B334D0007E07A /* callintent */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C88660972D5B334D0007E07A /* Build configuration list for PBXNativeTarget "callintent" */;
+			buildPhases = (
+				C88660882D5B334D0007E07A /* Sources */,
+				C88660892D5B334D0007E07A /* Frameworks */,
+				C886608A2D5B334D0007E07A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				C886608F2D5B334D0007E07A /* callintent */,
+			);
+			name = callintent;
+			packageProductDependencies = (
+			);
+			productName = callintent;
+			productReference = C886608C2D5B334D0007E07A /* callintent.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -244,12 +318,15 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1400;
+				LastSwiftUpdateCheck = 1620;
 				LastUpgradeCheck = 1400;
 				TargetAttributes = {
 					92EAED27295AC1F60096239E = {
 						CreatedOnToolsVersion = 14.0.1;
 						LastSwiftMigration = 1400;
+					};
+					C886608B2D5B334D0007E07A = {
+						CreatedOnToolsVersion = 16.2;
 					};
 				};
 			};
@@ -270,6 +347,7 @@
 			projectRoot = "";
 			targets = (
 				92EAED27295AC1F60096239E /* exolve_example */,
+				C886608B2D5B334D0007E07A /* callintent */,
 			);
 		};
 /* End PBXProject section */
@@ -281,6 +359,13 @@
 			files = (
 				92911DFE298021A400CDEFD8 /* mtswide_regular.ttf in Resources */,
 				92EAED30295AC1F80096239E /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C886608A2D5B334D0007E07A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -343,7 +428,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C88660882D5B334D0007E07A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		C88660942D5B334D0007E07A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C886608B2D5B334D0007E07A /* callintent */;
+			targetProxy = C88660932D5B334D0007E07A /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		92EAED34295AC1F80096239E /* Debug */ = {
@@ -569,6 +669,78 @@
 			};
 			name = Release;
 		};
+		C88660982D5B334D0007E07A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = KL42TSU837;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = callintent/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = callintent;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.exolve.demoapp.callintent;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = exolve_demoapp_callintent_development;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		C88660992D5B334D0007E07A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = KL42TSU837;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = callintent/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = callintent;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.exolve.demoapp.callintent;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = exolve_demoapp_callintent_development;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -590,6 +762,15 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		C88660972D5B334D0007E07A /* Build configuration list for PBXNativeTarget "callintent" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C88660982D5B334D0007E07A /* Debug */,
+				C88660992D5B334D0007E07A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
@@ -598,7 +779,7 @@
 			repositoryURL = "https://github.com/mtsexolve/mobile-voice-sdk";
 			requirement = {
 				kind = exactVersion;
-				version = 1.7.1;
+				version = 1.8.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
