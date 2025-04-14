@@ -28,7 +28,7 @@ struct SettingsView: View {
         VStack {
             VStack(alignment: .leading) {
                 Toggle(isOn: $useLocation) {
-                    Text(Strings.SettingsCallLocation)
+                    Text(Strings.SettingsDetectLocation)
                 }
                 .onChange(of: useLocation, perform: { value in client.enableLocationService(value) })
                 .toggleStyle(.check)

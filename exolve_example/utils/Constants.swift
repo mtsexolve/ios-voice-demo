@@ -35,7 +35,7 @@ struct Strings {
     static let ClearLogsConfirm = "Confirm"
     static let ClearLogsCancel = "Cancel"
     static let Settings = "Settings"
-    static let SettingsCallLocation = "Call location"
+    static let SettingsDetectLocation = "Detect location"
     static let SettingsSipTraces = "Enable SIP traces"
     static let SettingsLogLevel = "Log level: "
     static let SettingsEncryption = "Use encryption"

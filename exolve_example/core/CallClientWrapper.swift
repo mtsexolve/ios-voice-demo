@@ -41,7 +41,7 @@ class CallClientWrapper: ObservableObject, RegistrationDelegate, CallsDelegate {
         config.callKitConfiguration = CallKitConfiguration.default()
         config.callKitConfiguration?.notifyInForeground = true
         config.callKitConfiguration?.contactSearchHandler = contactSearchHandler
-        config.enableDetectCallLocation = locationServiceEnabled
+        config.enableDetectLocation = locationServiceEnabled
 
         if Storage.environment == Strings.Default {
             communicator = Communicator(configuration: config)
@@ -86,8 +86,13 @@ class CallClientWrapper: ObservableObject, RegistrationDelegate, CallsDelegate {
             Alert.show("Error", "No credentials")
             return
         }
-
-        callClient.registerUser(login, password: password)
+        if locationServiceEnabled && LocationAccessProvider.instance.authorizationStatus == .notDetermined {
+            LocationAccessProvider.instance.requestAuthorization { [self] in
+                callClient.registerUser(login, password: password)
+            }
+        } else {
+            callClient.registerUser(login, password: password)
+        }
     }
 
     func unregister() {
@@ -252,11 +257,11 @@ class CallClientWrapper: ObservableObject, RegistrationDelegate, CallsDelegate {
         NotificationCenter.default.post(name: .call, object: nil, userInfo: info)
     }
 
-    private func updateRegistrationState(_ error:RegistrationError? = nil,_ errorMessage: String? = nil) {
+    private func updateRegistrationState(_ error: RegistrationError? = nil,_ errorMessage: String? = nil) {
         registrationState = callClient.registrationState()
-        if let error = error, let errorMessage = errorMessage {
-            NSLog("\(logtag) registration error: \(error.stringValue), \(errorMessage)")
-            Alert.show("Error", "\(error.stringValue)\n\(errorMessage)")
+        if let errorMessage = errorMessage {
+            NSLog("\(logtag) registration error: \(errorMessage)")
+            Alert.show("Error", "\(errorMessage)")
         } else {
             NSLog("\(logtag) registration state: \(registrationState.stringValue)")
         }
@@ -313,8 +318,8 @@ class CallClientWrapper: ObservableObject, RegistrationDelegate, CallsDelegate {
     }
 
     internal func callError(_ call: Call, error: CallError, message: String) {
-        NSLog("\(logtag) call error: \(error.stringValue), \(message)")
-        Alert.show("Error", "\(message.isEmpty ? error.stringValue : message)")
+        NSLog("\(logtag) call error: \(message)")
+        Alert.show("Error", "\(message)")
         updateCallState(call)
         removeCall(call)
         checkToggleMeasurements()
@@ -424,6 +429,27 @@ class CallClientWrapper: ObservableObject, RegistrationDelegate, CallsDelegate {
 
     internal func registrationError(_ error: RegistrationError, message: String) {
         updateRegistrationState(error, message)
+        if (error == RegistrationError.RE_LocationNoAccess) && LocationAccessProvider.instance.authorizationStatus == .notDetermined {
+            if UIApplication.shared.applicationState == .active {
+                LocationAccessProvider.instance.requestAuthorization(deferredAction: { [self] in
+                    callClient.setOffline(false)
+                })
+            } else {
+                NSLog("\(logtag) active app required to activate account")
+                activeAppObserver = NotificationCenter.default.addObserver(
+                    forName: UIScene.didActivateNotification,
+                    object: nil,
+                    queue: OperationQueue.main) { [self] _ in
+                        LocationAccessProvider.instance.requestAuthorization(deferredAction: { [self] in
+                            callClient.setOffline(false)
+                        })
+                        if let observer = activeAppObserver {
+                            NotificationCenter.default.removeObserver(observer)
+                            activeAppObserver = nil
+                        }
+                    }
+            }
+        }
     }
 
 }
