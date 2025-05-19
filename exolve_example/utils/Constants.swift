@@ -72,5 +72,9 @@ struct Images {
     static let Back = "arrow.backward"
     static let Contacts = "person.crop.circle"
     static let Settings = "gearshape"
+    static let RouteEarpiece = "iphone"
+    static let RouteSpeaker = "speaker"
+    static let RouteHeadset = "headphones"
+    static let RouteActive = "checkmark"
 }
 

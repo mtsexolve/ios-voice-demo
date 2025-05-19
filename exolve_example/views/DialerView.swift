@@ -3,6 +3,15 @@ import SwiftUI
 struct DialerView: View {
     @State var callNumber = ""
     private let contactPicker = ContactPickerView()
+    var isTransferDialer: Bool
+    @Binding var activeCall: CallData?
+    
+    let close = Image(systemName: Images.Close)
+    
+    init(activeCall: Binding<CallData?> = .constant(nil), isTransferDialer : Bool = false) {
+        _activeCall = activeCall
+        self.isTransferDialer = isTransferDialer
+    }
 
     var body: some View {
         VStack {
@@ -56,9 +65,21 @@ struct DialerView: View {
                         Circle()
                             .fill(green)
                             .frame(width: 77, height: 77, alignment: .center)
-                        Image(systemName: Images.CallResume)
+                        if ( isTransferDialer ) {
+                            Image(systemName: Images.CallTransfer )
+                                .resizable()
+                                .frame(width: 20, height: 20)
+                        } else {
+                            Image(systemName: ( isTransferDialer ) ? Images.CallTransfer : Images.CallResume)
+                        }
                     }
-                    .onTapGesture { onCall() }
+                    .onTapGesture {
+                        if ( isTransferDialer ) {
+                            onTransfer()
+                        } else {
+                            onCall()
+                        }
+                    }
                     .onLongPressGesture(minimumDuration: 0.3) {
                         callNumber = CallClientWrapper.instance.lastCall
                     }
@@ -70,6 +91,12 @@ struct DialerView: View {
                     .simultaneousGesture(LongPressGesture(minimumDuration: 1)
                     .onEnded { _ in callNumber = "" })
                     .accessibilityIdentifier("DialerBackspaceButton")
+            }
+            if(isTransferDialer){
+                HStack {
+                    DialerButton(action: onHide, color: nil, label: close)
+                        .accessibilityIdentifier("TransferKeyClose")
+                }
             }
         }
         .font(font_mts).foregroundColor(.black)
@@ -88,6 +115,12 @@ struct DialerView: View {
     private func onCall() {
         CallClientWrapper.instance.callToNumber(number: callNumber)
     }
+    
+    private func onTransfer() {
+        if let activeCall {
+            CallClientWrapper.instance.callTransfer(call: activeCall.call, toNumber: callNumber)
+        }
+    }
 
     private func onContacts() {
         contactPicker.selectPhoneNumber = { (selectedNumber : String?) in
@@ -97,5 +130,8 @@ struct DialerView: View {
         }
         contactPicker.pickContact()
     }
-
+    
+    private func onHide() {
+        NotificationCenter.default.post(name: .hideTransferKeypad, object: nil, userInfo: nil)
+    }
 }

@@ -34,6 +34,7 @@
 		92EAED30295AC1F80096239E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 92EAED2F295AC1F80096239E /* Assets.xcassets */; };
 		92EF6F6E2BA880AB0043D2E3 /* RouteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92EF6F6D2BA880AB0043D2E3 /* RouteButton.swift */; };
 		A530E1FB29C1A361007997F5 /* DtmfView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A530E1F929C1A361007997F5 /* DtmfView.swift */; };
+		C88316692DDB5A4900C62FE7 /* RoutesListButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C88316682DDB5A4900C62FE7 /* RoutesListButton.swift */; };
 		C886608E2D5B334D0007E07A /* Intents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C886608D2D5B334D0007E07A /* Intents.framework */; };
 		C88660952D5B334D0007E07A /* callintent.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = C886608C2D5B334D0007E07A /* callintent.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		C891ACA72CDBE90D00F4FC89 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C891ACA62CDBE90D00F4FC89 /* SettingsView.swift */; };
@@ -107,6 +108,7 @@
 		92EAED2F295AC1F80096239E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		92EF6F6D2BA880AB0043D2E3 /* RouteButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouteButton.swift; sourceTree = "<group>"; };
 		A530E1F929C1A361007997F5 /* DtmfView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DtmfView.swift; sourceTree = "<group>"; };
+		C88316682DDB5A4900C62FE7 /* RoutesListButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutesListButton.swift; sourceTree = "<group>"; };
 		C886608C2D5B334D0007E07A /* callintent.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = callintent.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		C886608D2D5B334D0007E07A /* Intents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Intents.framework; path = System/Library/Frameworks/Intents.framework; sourceTree = SDKROOT; };
 		C891ACA62CDBE90D00F4FC89 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -157,6 +159,7 @@
 				92303ED12ACEDCC700BFA222 /* ContactPickerView.swift */,
 				92911DCC297FB89200CDEFD8 /* DialerButton.swift */,
 				92EF6F6D2BA880AB0043D2E3 /* RouteButton.swift */,
+				C88316682DDB5A4900C62FE7 /* RoutesListButton.swift */,
 			);
 			path = components;
 			sourceTree = "<group>";
@@ -407,6 +410,7 @@
 				927533CE29FBB6190025A357 /* ConferenceView.swift in Sources */,
 				9288CD432BD26C2B00A369F7 /* LocationAccessProvider.swift in Sources */,
 				92911DCD297FB89200CDEFD8 /* DialerButton.swift in Sources */,
+				C88316692DDB5A4900C62FE7 /* RoutesListButton.swift in Sources */,
 				92BCB9F029783306009ABD67 /* Utils.swift in Sources */,
 				925ACFDC29BB6CEA009A68A9 /* CallsKeyboard.swift in Sources */,
 				92EAED2C295AC1F60096239E /* exolve_exampleApp.swift in Sources */,
@@ -779,7 +783,7 @@
 			repositoryURL = "https://github.com/mtsexolve/mobile-voice-sdk";
 			requirement = {
 				kind = exactVersion;
-				version = 1.10.0;
+				version = 1.11.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

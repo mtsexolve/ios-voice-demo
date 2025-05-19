@@ -21,16 +21,17 @@ struct CallsKeyboard: View {
                             label: Text(Strings.CallMute),
                             image: Image(systemName: activeCall.mute ? Images.CallMuteFill : Images.CallMute),
                             imageColor: activeCall.mute ? .red : .black)
-                        CallButton(action: onKeyboard, bgColor: grey,
+                        CallButton(action: onDtmfKeyboard, bgColor: grey,
                             label: Text(Strings.Dtmf), image: Image(systemName: Images.Keys3x3))
                         .accessibilityIdentifier("DTMFButton")
-                        RouteButton(bgColor: grey, label: Text(client.currentAudioRoute))
+                        //RouteButton(bgColor: grey, label: Text(client.currentAudioRoute))
+                        RoutesListButton(bgColor: grey)
                     }
                     HStack {
                         CallButton(action: onAdd, bgColor: grey,
                             label: Text(Strings.Add), image: Image(systemName: Images.Add))
                         .accessibilityIdentifier("CallsKeyboardAddCallButton")
-                        CallButton(action: onTransfer, bgColor: grey,
+                        CallButton(action: onTransferKeyboard, bgColor: grey,
                             label: Text(Strings.CallTransfer), image: Image(systemName: Images.CallTransfer), imageColor: .black)
                         .accessibilityIdentifier("CallsKeyboardTransferCallButton")
 
@@ -69,9 +70,15 @@ struct CallsKeyboard: View {
             .forEach { $0.call.mute(mute) }
     }
 
-    func onKeyboard() {
+    func onDtmfKeyboard() {
         if (activeCall.state == .CS_Connected) {
             NotificationCenter.default.post(name: .showDtmfKeypad, object: nil, userInfo: nil)
+        }
+    }
+    
+    func onTransferKeyboard() {
+        if (activeCall.state == .CS_Connected) {
+            NotificationCenter.default.post(name: .showTransferKeypad, object: nil, userInfo: nil)
         }
     }
 
@@ -98,17 +105,6 @@ struct CallsKeyboard: View {
         default:
             break
         }
-    }
-
-    func onTransfer() {
-        NSLog("\(logtag) transferring call")
-        contactPicker.selectPhoneNumber = { (selectedNumber : String?) in
-            NSLog("\(logtag) number for transfer to: \(selectedNumber ?? "null")")
-            if let number = selectedNumber {
-                client.callTransfer(call: activeCall.call, toNumber: number)
-            }
-        }
-        contactPicker.pickContact()
     }
 
     func isMuted() -> Bool {

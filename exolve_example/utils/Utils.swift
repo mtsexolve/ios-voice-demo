@@ -24,6 +24,14 @@ extension Notification.Name {
         return .init(rawValue: "hideDtmfKeyad")
     }
 
+    static var showTransferKeypad: Notification.Name {
+        return .init(rawValue: "showTransferKeypad")
+    }
+    
+    static var hideTransferKeypad: Notification.Name {
+        return .init(rawValue: "hideTransferKeypad")
+    }
+    
     static var voipPushToken: Notification.Name {
         return .init(rawValue: "deviceVoipPushTokenUpdatedEvent")
     }

@@ -4,13 +4,14 @@ import AVFAudio
 import ExolveVoiceSDK
 import UIKit
 
-class CallClientWrapper: ObservableObject, RegistrationDelegate, CallsDelegate {
+class CallClientWrapper: ObservableObject, RegistrationDelegate, CallsDelegate, AudioRouteDelegate {
     @Published private(set) var calls: [CallData] = []
     @Published private(set) var conferenceActive = false
     @Published private(set) var isSpeakerOn: Bool = false
     @Published private(set) var registrationState: RegistrationState
     @Published private(set) var pushToken: String = ""
     @Published private(set) var versionDescription: String = ""
+    @Published private(set) var audioRoutes: [AudioRouteData] = []
     @Published private(set) var currentAudioRoute: String = Strings.AudioRoute
     public private(set) var locationServiceEnabled: Bool = true;
 
@@ -57,9 +58,9 @@ class CallClientWrapper: ObservableObject, RegistrationDelegate, CallsDelegate {
         callClient = communicator.callClient()
         registrationState = callClient.registrationState()
 
-
         callClient.setRegistrationDelegate(self, with: DispatchQueue.main)
         callClient.setCallsDelegate(self, with: DispatchQueue.main)
+        callClient.setAudioRouteDelegate(self)
 
         communicator.retrieveVoipPushToken { [self] (token: String) in
             NSLog("\(logtag) retrieved voip push token \"\(token)\"")
@@ -189,6 +190,10 @@ class CallClientWrapper: ObservableObject, RegistrationDelegate, CallsDelegate {
         NSLog("\(logtag) speaker is on: \(isSpeakerOn)")
     }
 
+    func setAudioRoute(_ routeData: AudioRouteData) {
+        callClient.setAudioRoute(routeData)
+    }
+
     func callTransfer(call: Call!, toNumber: String) {
         NSLog("\(logtag) call transfer to number \(toNumber)")
         for stored in calls {
@@ -240,7 +245,7 @@ class CallClientWrapper: ObservableObject, RegistrationDelegate, CallsDelegate {
 
     func enableLocationService(_ enabled: Bool) {
         NSLog("\(logtag) location services \(enabled ? "en" : "dis")abled")
-        communicator.configurationManager().setDetectCallLocationEnabled(enabled)
+        communicator.configurationManager().setDetectLocationEnabled(enabled)
         locationServiceEnabled = enabled
         Storage.location = enabled
     }
@@ -290,6 +295,11 @@ class CallClientWrapper: ObservableObject, RegistrationDelegate, CallsDelegate {
         return arr
     }
 
+    //MARK: audio route delegate here
+    internal func routeChanged(_ routes: [AudioRouteData]) {
+        audioRoutes = routes
+    }
+
     //MARK: calls delegate here
     internal func callNew(_ call: Call) {
         NSLog("\(logtag) call new")
@@ -310,11 +320,32 @@ class CallClientWrapper: ObservableObject, RegistrationDelegate, CallsDelegate {
     }
 
     internal func callDisconnected(_ call: Call, details: CallDisconnectDetails) {
-        NSLog("\(logtag) call disconnected: id: \(call.identifier), duration: \(details.duration), disconnectedByUser: \(details.disconnectedByUser)")
+        NSLog("\(logtag) call disconnected: id: \(call.identifier), duration: \(details.duration), reason: \(details.disconnectReason)")
         updateCallState(call)
         removeCall(call)
         updateConferenceState()
         checkToggleMeasurements()
+        let isMissed = call.direction == .CD_Incoming
+            && details.duration == 0
+            && details.disconnectReason == .DR_EndedByPeer
+        if (isMissed) {
+            showMissedCallNotification(call.formattedNumber)
+        }
+    }
+    
+    private func showMissedCallNotification(_ number: String) {
+        let content = UNMutableNotificationContent()
+        content.title = "Missed call"
+        content.body = "Missed call from \(number)"
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
+        let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+        Task {
+            do {
+                try await UNUserNotificationCenter.current().add(request)
+            } catch {
+                NSLog("\(logtag) error while adding notification")
+            }
+        }
     }
 
     internal func callError(_ call: Call, error: CallError, message: String) {
