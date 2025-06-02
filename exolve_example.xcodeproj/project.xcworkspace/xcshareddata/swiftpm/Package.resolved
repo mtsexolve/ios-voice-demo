@@ -6,8 +6,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/mtsexolve/mobile-voice-sdk",
       "state" : {
-        "revision" : "46a07db5248bea9bfbc8c61fdcd2fe8e606e8e5c",
-        "version" : "1.11.0"
+        "revision" : "d226555a9c978f3f2a469d8b12412eca14b10f69",
+        "version" : "1.11.1"
       }
     }
   ],
