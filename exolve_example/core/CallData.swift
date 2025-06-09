@@ -4,6 +4,7 @@ final class CallData: ObservableObject {
     var call: Call!
     var callId: String { get {return call.identifier} }
     var number: String { get {return call.formattedNumber} }
+    var extraContext: String { get {return call.extraContext ?? ""} }
     var qualityRating: Float = 5.0
     @Published var state: CallState
     @Published var mute: Bool
@@ -34,7 +35,7 @@ extension CallData {
                     qualityRating = statistics.currentRating
                 }
             }
-            duration += 1
+            duration = call.duration
         }
     }
 }

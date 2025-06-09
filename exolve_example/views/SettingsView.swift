@@ -80,7 +80,14 @@ struct SettingsView: View {
                     }
                     .foregroundColor(Color(UIColor.label))
                 }
-
+                
+                HStack {
+                    Text("Call Context:")
+                    TextField("Extra context to send with outgoing calls", text: $client.callContext)
+                    .disableAutocorrection(true)
+                    .textFieldStyle(.roundedBorder)
+                }
+                .padding(.top, 10)
 
                 Spacer()
 

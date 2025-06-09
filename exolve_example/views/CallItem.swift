@@ -39,7 +39,15 @@ struct CallItem: View {
                         }
                     }
                     .padding(.vertical, 5)
-
+                    
+                    if !data.extraContext.isEmpty {
+                        Text(data.extraContext)
+                            .foregroundColor(.gray)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.leading, data.isAlive ? 0 : nil)
+                            .padding(.vertical, 5)
+                    }
+                    
                     HStack {
                         if data.isAlive {
                             Text(formatDuration(data.duration))

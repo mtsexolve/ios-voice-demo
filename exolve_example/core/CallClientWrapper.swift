@@ -13,6 +13,7 @@ class CallClientWrapper: ObservableObject, RegistrationDelegate, CallsDelegate, 
     @Published private(set) var versionDescription: String = ""
     @Published private(set) var audioRoutes: [AudioRouteData] = []
     @Published private(set) var currentAudioRoute: String = Strings.AudioRoute
+    @Published var callContext: String = ""
     public private(set) var locationServiceEnabled: Bool = true;
 
     private(set) var login = ""
@@ -41,7 +42,8 @@ class CallClientWrapper: ObservableObject, RegistrationDelegate, CallsDelegate, 
         config.useSecureConnection = Storage.encryption
         config.callKitConfiguration = CallKitConfiguration.default()
         config.callKitConfiguration?.notifyInForeground = true
-        config.callKitConfiguration?.contactSearchHandler = contactSearchHandler
+        config.callKitConfiguration?.contactSearchHandlerWithContext = contactSearchHandler
+        config.callKitConfiguration?.omitRemoteHandle = true
         config.enableDetectLocation = locationServiceEnabled
 
         if Storage.environment == Strings.Default {
@@ -110,14 +112,14 @@ class CallClientWrapper: ObservableObject, RegistrationDelegate, CallsDelegate, 
             NSLog("\(logtag) request record permission")
             session.requestRecordPermission { [self] (granted: Bool) in
                 if granted {
-                    NSLog("\(logtag) call to \"\(number)\"")
-                    placeCall(number)
+                    NSLog("\(logtag) call to \"\(number)\" context: \(callContext)")
+                    placeCall(number, extraContext: callContext)
                 }
             }
             break
         case AVAudioSession.RecordPermission.granted:
-            NSLog("\(logtag) call to \"\(number)\"")
-                placeCall(number)
+            NSLog("\(logtag) call to \"\(number)\" context: \(callContext)")
+            placeCall(number, extraContext: callContext)
             break
         default:
             NSLog("\(logtag) no record permission")
@@ -125,15 +127,15 @@ class CallClientWrapper: ObservableObject, RegistrationDelegate, CallsDelegate, 
         }
     }
 
-    private func placeCall(_ number: String) {
+    private func placeCall(_ number: String, extraContext: String = "") {
         if locationServiceEnabled && LocationAccessProvider.instance.authorizationStatus == .notDetermined {
             let action = { [self] in
                 NSLog("\(logtag) place deferred call to \(number)")
-                callClient.placeCall(number)
+                callClient.placeCall(number, withContext: extraContext)
             }
             LocationAccessProvider.instance.requestAuthorization(deferredAction: action)
         } else {
-            callClient.placeCall(number)
+            callClient.placeCall(number, withContext: extraContext)
         }
     }
 
@@ -302,7 +304,7 @@ class CallClientWrapper: ObservableObject, RegistrationDelegate, CallsDelegate, 
 
     //MARK: calls delegate here
     internal func callNew(_ call: Call) {
-        NSLog("\(logtag) call new")
+        NSLog("\(logtag) call new id: \(call.identifier), context: \(call.extraContext ?? "")")
         calls.append(CallData(call))
         updateCallState(call)
     }
