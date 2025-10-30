@@ -40,6 +40,8 @@ struct Strings {
     static let SettingsLogLevel = "Log level: "
     static let SettingsEncryption = "Use encryption"
     static let SettingsEnvironment = "Environment"
+    static let SettingsRegistrationMode = "Registration Mode"
+    static let SettingsCallContext = "Call Context"
     static let SettingsRestart = "Restart application"
     static let SettingsRestartWarning = "After closing the application, you will need to launch it manually"
     static let SettingsProceed = "Proceed"
@@ -77,4 +79,3 @@ struct Images {
     static let RouteHeadset = "headphones"
     static let RouteActive = "checkmark"
 }
-

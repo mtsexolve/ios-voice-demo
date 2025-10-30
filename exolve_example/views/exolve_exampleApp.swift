@@ -2,6 +2,8 @@ import SwiftUI
 import Intents
 import Contacts
 import AVFAudio
+import Intents
+import UserNotifications
 
 @main
 struct exolve_exampleApp: App {
@@ -68,7 +70,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, ObservableObject {
 
 }
 
-class AppDelegate: UIResponder, UIApplicationDelegate {
+
+
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate  {
     private let logtag = "AppDelegate:"
 
 
@@ -76,7 +80,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         Task {
             do {
-                try await UNUserNotificationCenter.current().requestAuthorization(options: [.alert])
+                let center = UNUserNotificationCenter.current()
+                center.delegate = self
+                try await center.requestAuthorization(options: [.alert])
             } catch {
                 NSLog("\(logtag) request notification authorization error")
             }
@@ -105,5 +111,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       return sceneConfig
     }
 
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                willPresent notification: UNNotification,
+                                withCompletionHandler completionHandler:
+                                @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler([.list,.banner])
+    }
 }
 

@@ -47,10 +47,10 @@ class CallClientWrapper: ObservableObject, RegistrationDelegate, CallsDelegate, 
         config.enableDetectLocation = locationServiceEnabled
 
         if Storage.environment == Strings.Default {
-            communicator = Communicator(configuration: config)
+            communicator = Communicator(configuration: config, registrationMode: Storage.registrationMode)
             Storage.environment = (!communicator.getVersionInfo().environment.isEmpty) ? communicator.getVersionInfo().environment : Strings.Default
         } else {
-            communicator = Communicator(configuration: config, environment:Storage.environment)
+            communicator = Communicator(configuration: config, registrationMode: Storage.registrationMode, environment:Storage.environment)
         }
 
         let sdkVersionInfo : VersionInfo = communicator.getVersionInfo()
@@ -91,15 +91,15 @@ class CallClientWrapper: ObservableObject, RegistrationDelegate, CallsDelegate, 
         }
         if locationServiceEnabled && LocationAccessProvider.instance.authorizationStatus == .notDetermined {
             LocationAccessProvider.instance.requestAuthorization { [self] in
-                callClient.registerUser(login, password: password)
+                callClient.setAccountUser(login, password: password)
             }
         } else {
-            callClient.registerUser(login, password: password)
+            callClient.setAccountUser(login, password: password)
         }
     }
 
     func unregister() {
-        callClient.unregister()
+        callClient.clearAccount()
     }
 
     func callToNumber(number: String) {
@@ -250,6 +250,12 @@ class CallClientWrapper: ObservableObject, RegistrationDelegate, CallsDelegate, 
         communicator.configurationManager().setDetectLocationEnabled(enabled)
         locationServiceEnabled = enabled
         Storage.location = enabled
+    }
+
+    func setRegistrationMode(_ mode: RegistrationMode) {
+        NSLog("\(logtag) set registration mode to \(mode)")
+        communicator.configurationManager().setRegistrationMode(mode)
+        Storage.registrationMode = mode
     }
 
     private func updateCallState(_ call: Call) {
@@ -486,4 +492,3 @@ class CallClientWrapper: ObservableObject, RegistrationDelegate, CallsDelegate, 
     }
 
 }
-

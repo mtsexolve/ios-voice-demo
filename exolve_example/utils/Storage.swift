@@ -13,6 +13,7 @@ class Storage {
         static let LogLevel = "log_level"
         static let Encryption = "encryption"
         static let Environment = "environment"
+        static let RegistrationMode = "registration_mode"
     }
 
     static var login: String {
@@ -53,6 +54,11 @@ class Storage {
     static var environment: String {
         get { prefs.string(forKey: Keys.Environment) ?? Strings.Default }
         set { prefs.set(newValue, forKey: Keys.Environment) }
+    }
+
+    static var registrationMode: RegistrationMode {
+        get { RegistrationMode(rawValue: prefs.integer(forKey: Keys.RegistrationMode)) ?? .RM_WhenActive }
+        set { prefs.set(newValue.rawValue, forKey: Keys.RegistrationMode) }
     }
 
     static var callIntent: String?

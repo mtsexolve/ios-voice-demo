@@ -1,5 +1,6 @@
 
 import SwiftUI
+import ExolveVoiceSDK
 
 struct SettingsView: View {
     @ObservedObject private var client = CallClientWrapper.instance
@@ -8,6 +9,7 @@ struct SettingsView: View {
     @State private var logLevel = Storage.logLevel
     @State private var useEncryption = Storage.encryption
     @State private var environment = Storage.environment
+    @State private var registrationMode = Storage.registrationMode
     @State var needRestart = false
 
     enum AlertType {
@@ -24,9 +26,27 @@ struct SettingsView: View {
     ]
     static private let logLevelsDescription: [String] = ["Trace", "Debug", "Info", "Warning", "Error"]
 
+    static private let registrationModes: [RegistrationMode: String] = [
+        .RM_WhenActive: "When Active",
+        .RM_OnlyForCalls: "Only For Calls"
+    ]
+
     var body: some View {
         VStack {
             VStack(alignment: .leading) {
+                HStack {
+                    Text(Strings.SettingsRegistrationMode)
+                    Menu(SettingsView.registrationModes[registrationMode] ?? SettingsView.registrationModes[.RM_WhenActive]! ) {
+                        ForEach(Array(SettingsView.registrationModes.keys), id: \.self) { mode in
+                            Button(SettingsView.registrationModes[mode] ?? "", action: {
+                                registrationMode = mode
+                                client.setRegistrationMode(mode)
+                            })
+                        }
+                    }
+                    .foregroundColor(Color(UIColor.label))
+                }
+
                 Toggle(isOn: $useLocation) {
                     Text(Strings.SettingsDetectLocation)
                 }
@@ -80,9 +100,9 @@ struct SettingsView: View {
                     }
                     .foregroundColor(Color(UIColor.label))
                 }
-                
+
                 HStack {
-                    Text("Call Context:")
+                    Text(Strings.SettingsCallContext)
                     TextField("Extra context to send with outgoing calls", text: $client.callContext)
                     .disableAutocorrection(true)
                     .textFieldStyle(.roundedBorder)
