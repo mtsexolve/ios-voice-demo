@@ -24,7 +24,7 @@ class LocationAccessProvider: NSObject, CLLocationManagerDelegate {
 
     public var authorizationStatus: CLAuthorizationStatus { return locationManager.authorizationStatus }
 
-    public func requestAuthorization(deferredAction: @escaping () -> Void) {
+    public func requestAuthorization(deferredAction: (() -> Void)? = nil) {
         NSLog("\(logtag) requesting location access")
         self.deferredAction = deferredAction
 

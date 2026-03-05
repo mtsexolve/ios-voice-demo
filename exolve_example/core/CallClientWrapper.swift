@@ -4,7 +4,7 @@ import AVFAudio
 import ExolveVoiceSDK
 import UIKit
 
-class CallClientWrapper: ObservableObject, RegistrationDelegate, CallsDelegate, AudioRouteDelegate {
+class CallClientWrapper: ObservableObject, RegistrationDelegate, CallsDelegate, AudioRouteDelegate, CredentialsRequesterDelegate {
     @Published private(set) var calls: [CallData] = []
     @Published private(set) var conferenceActive = false
     @Published private(set) var isSpeakerOn: Bool = false
@@ -62,6 +62,7 @@ class CallClientWrapper: ObservableObject, RegistrationDelegate, CallsDelegate, 
 
         callClient.setRegistrationDelegate(self, with: DispatchQueue.main)
         callClient.setCallsDelegate(self, with: DispatchQueue.main)
+        callClient.setCredentialsRequesterDelegate(self, with: DispatchQueue.main)
         callClient.setAudioRouteDelegate(self)
 
         communicator.retrieveVoipPushToken { [self] (token: String) in
@@ -80,8 +81,6 @@ class CallClientWrapper: ObservableObject, RegistrationDelegate, CallsDelegate, 
     }
 
     func register(_ login: String, _ password: String) {
-        Storage.login = login
-        Storage.password = password
         self.login = login
         self.password = password
 
@@ -128,14 +127,26 @@ class CallClientWrapper: ObservableObject, RegistrationDelegate, CallsDelegate, 
     }
 
     private func placeCall(_ number: String, extraContext: String = "") {
+        let performCall = { [self] in
+            if Storage.registrationMode == .RM_PerCallCredentials {
+                let login = Storage.login
+                let password = Storage.password
+                NSLog("\(logtag) place call to \(number) as \(login)")
+                callClient.placeCall(number, withContext: extraContext, asUser: login, withPassword: password)
+            } else {
+                NSLog("\(logtag) place call to \(number)")
+                callClient.placeCall(number, withContext: extraContext)
+            }
+        }
+
         if locationServiceEnabled && LocationAccessProvider.instance.authorizationStatus == .notDetermined {
             let action = { [self] in
                 NSLog("\(logtag) place deferred call to \(number)")
-                callClient.placeCall(number, withContext: extraContext)
+                performCall()
             }
             LocationAccessProvider.instance.requestAuthorization(deferredAction: action)
         } else {
-            callClient.placeCall(number, withContext: extraContext)
+            performCall()
         }
     }
 
@@ -470,18 +481,14 @@ class CallClientWrapper: ObservableObject, RegistrationDelegate, CallsDelegate, 
         updateRegistrationState(error, message)
         if (error == RegistrationError.RE_LocationNoAccess) && LocationAccessProvider.instance.authorizationStatus == .notDetermined {
             if UIApplication.shared.applicationState == .active {
-                LocationAccessProvider.instance.requestAuthorization(deferredAction: { [self] in
-                    callClient.setOffline(false)
-                })
+                LocationAccessProvider.instance.requestAuthorization()
             } else {
                 NSLog("\(logtag) active app required to activate account")
                 activeAppObserver = NotificationCenter.default.addObserver(
                     forName: UIScene.didActivateNotification,
                     object: nil,
                     queue: OperationQueue.main) { [self] _ in
-                        LocationAccessProvider.instance.requestAuthorization(deferredAction: { [self] in
-                            callClient.setOffline(false)
-                        })
+                        LocationAccessProvider.instance.requestAuthorization()
                         if let observer = activeAppObserver {
                             NotificationCenter.default.removeObserver(observer)
                             activeAppObserver = nil
@@ -491,4 +498,20 @@ class CallClientWrapper: ObservableObject, RegistrationDelegate, CallsDelegate, 
         }
     }
 
+    //MARK credentials provider
+    internal func requestPassword(forAccount account: String,
+                                  withSuccessHandler successHandler: @escaping (String) -> Void,
+                                  cancelHandler: @escaping () -> Void) {
+        NSLog("\(self.logtag) got password request for account \(account)")
+        let delay = Double.random(in: 0.5...1.5)
+        DispatchQueue.global().asyncAfter(deadline: .now() + delay) {
+            if account == Storage.login.trimmingCharacters(in: .whitespacesAndNewlines) {
+                NSLog("\(self.logtag) retrieved password for account \(account)")
+                successHandler(Storage.password.trimmingCharacters(in: .whitespacesAndNewlines))
+            } else {
+                NSLog("\(self.logtag) account mismatch, canceling password request (expected `\(Storage.login)`, got `\(account)`)")
+                cancelHandler()
+            }
+        }
+    }
 }

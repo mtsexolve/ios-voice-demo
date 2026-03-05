@@ -28,7 +28,8 @@ struct SettingsView: View {
 
     static private let registrationModes: [RegistrationMode: String] = [
         .RM_WhenActive: "When Active",
-        .RM_OnlyForCalls: "Only For Calls"
+        .RM_OnlyForCalls: "Only For Calls",
+        .RM_PerCallCredentials: "Per-call Credentials"
     ]
 
     var body: some View {

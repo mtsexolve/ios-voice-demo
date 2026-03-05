@@ -4,6 +4,7 @@ import Combine
 struct AccountView: View {
     @State private var login: String
     @State private var password: String
+    @State private var registrationMode = Storage.registrationMode
     @ObservedObject private var client = CallClientWrapper.instance
     @EnvironmentObject var sceneDelegate: SceneDelegate
 
@@ -17,7 +18,13 @@ struct AccountView: View {
             VStack {
                 Group {
                     AccountTextField(value: $login, hint: Strings.EnterLogin)
+                        .onChange(of: login) { newValue in
+                            Storage.login = newValue
+                        }
                     AccountTextField(value: $password, hint: Strings.EnterPassword)
+                        .onChange(of: password) { newValue in
+                            Storage.password = newValue
+                        }
 
                     Button(action: onToggleActivate) {
                         Text(client.registrationState == .RS_NotRegistered ? Strings.Activate : Strings.Deactivate)
@@ -32,6 +39,16 @@ struct AccountView: View {
                         .cornerRadius(10)
                         .foregroundColor(red)
                     )
+                    .disabled(registrationMode == .RM_PerCallCredentials)
+                    .opacity(registrationMode == .RM_PerCallCredentials ? 0.5 : 1.0)
+
+                    if registrationMode == .RM_PerCallCredentials {
+                        Text("Account activation is not available in per-call credentials mode")
+                            .font(.caption)
+                            .foregroundColor(.gray)
+                            .multilineTextAlignment(.center)
+                            .padding(.top, 8)
+                    }
                     Spacer()
                     if !client.pushToken.isEmpty {
                         VStack {
@@ -51,6 +68,9 @@ struct AccountView: View {
                 }
                 .padding(.horizontal)
             }
+        }
+        .onAppear {
+            registrationMode = Storage.registrationMode
         }
         .onReceive(sceneDelegate.$authorizationString) { newValue in
             if newValue.isEmpty {

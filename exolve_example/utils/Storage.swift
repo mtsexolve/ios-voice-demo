@@ -57,7 +57,11 @@ class Storage {
     }
 
     static var registrationMode: RegistrationMode {
-        get { RegistrationMode(rawValue: prefs.integer(forKey: Keys.RegistrationMode)) ?? .RM_WhenActive }
+        get {
+            let val = prefs.integer(forKey: Keys.RegistrationMode)
+            let mode = val != 0 ? RegistrationMode(rawValue: val)! : .RM_WhenActive
+            return mode
+        }
         set { prefs.set(newValue.rawValue, forKey: Keys.RegistrationMode) }
     }
 
