@@ -14,7 +14,7 @@
 		<string>exolve_demoapp_callintent_adhoc</string>
 	</dict>
 	<key>signingCertificate</key>
-	<string>162342A5EEFC25F6C8BBF58DEC23A1BD23C1265B</string>
+	<string>9F2C0A07814C48FBDADE9C751BBE2C0AC9C62776</string>
 	<key>signingStyle</key>
 	<string>manual</string>
 	<key>stripSwiftSymbols</key>

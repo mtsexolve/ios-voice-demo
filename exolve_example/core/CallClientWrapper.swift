@@ -197,12 +197,6 @@ class CallClientWrapper: ObservableObject, RegistrationDelegate, CallsDelegate, 
         }
     }
 
-    func setSpeakerOn(_ speakerOn: Bool) {
-        callClient.setSpeakerOn(speakerOn)
-        isSpeakerOn = callClient.isSpeakerOn()
-        NSLog("\(logtag) speaker is on: \(isSpeakerOn)")
-    }
-
     func setAudioRoute(_ routeData: AudioRouteData) {
         callClient.setAudioRoute(routeData)
     }
@@ -392,60 +386,6 @@ class CallClientWrapper: ObservableObject, RegistrationDelegate, CallsDelegate, 
             if call == stored.call {
                 stored.mute = call.isMuted
                 break
-            }
-        }
-    }
-
-    internal func callUserActionRequired(_ call: Call, pendingEvent: CallPendingEvent, requiredAction: CallUserAction) {
-        NSLog("\(logtag) action required: \(pendingEvent) \(requiredAction)")
-
-        if pendingEvent == .CPE_IncomingCall {
-            if UIApplication.shared.applicationState == .background {
-                NSLog("\(logtag) show notification to open the app")
-                let content = UNMutableNotificationContent()
-                content.title = Strings.NotificationOpenAppTitle
-                content.body = Strings.NotificationOpenAppBody
-                let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 0.01, repeats: false)
-                let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
-                Task {
-                    do {
-                        NSLog("\(logtag) add notification")
-                        try await UNUserNotificationCenter.current().add(request)
-                    } catch {
-                        NSLog("\(logtag) error while adding notification")
-                    }
-                }
-            }
-        }
-
-        if pendingEvent == .CPE_AcceptCall {
-            let status = LocationAccessProvider.instance.authorizationStatus
-            if status == .notDetermined {
-                NSLog("\(logtag) authorization required")
-                if let data = calls.first(where: { $0.call == call }) {
-                    data.locationAccessRequired = true
-                    let action = { [self, call] in
-                        NSLog("\(logtag) accepting incoming call")
-                        calls.forEach() { $0.locationAccessRequired = false}
-                        call.accept()
-                    }
-                    LocationAccessProvider.instance.requestAuthorization(deferredAction: action)
-                }
-            } else if status == .restricted || status == .denied {
-                call.accept() // force SDK to fail on error
-            } else if UIApplication.shared.applicationState != .active {
-                //not enough permission wait till the application will be active
-                NSLog("\(logtag) active app required to accepted the call")
-                activeAppObserver = NotificationCenter.default.addObserver(
-                    forName: UIScene.didActivateNotification,
-                    object: nil,
-                    queue: OperationQueue.main) { [self, weak call] _ in
-                        call?.accept()
-                        if let observer = activeAppObserver {
-                            NotificationCenter.default.removeObserver(observer)
-                            activeAppObserver = nil
-                        }
-                    }
             }
         }
     }
