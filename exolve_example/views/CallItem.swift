@@ -1,4 +1,5 @@
 import SwiftUI
+import AVFoundation
 
 struct CallItem: View {
     @ObservedObject var data: CallData
@@ -131,7 +132,9 @@ struct CallItem: View {
             data.call.hold()
         } else if data.isNewIncoming {
             NSLog("\(logtag) accept")
-            data.call.accept()
+            requestMicrophoneAccess { _ in
+                data.call.accept()
+            }
         }
     }
 

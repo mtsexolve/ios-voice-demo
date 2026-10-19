@@ -1,5 +1,6 @@
 import SwiftUI
 import Contacts
+import AVFoundation
 import ExolveVoiceSDK
 
 extension Notification.Name {
@@ -125,5 +126,33 @@ func contactSearchHandler(_ callNumber: String, _ context: String?, _ callback: 
         callback(findContactName(callNumber) ?? formatCallNumber(callNumber, format))
     } else {
         callback(formatCallNumber(callNumber, format))
+    }
+}
+
+func execOnApplicationActive(_ callback: @escaping ()->Void) {
+    if UIApplication.shared.applicationState != .active {
+        var obj:Any? = nil
+        obj = NotificationCenter.default.addObserver(
+            forName: UIScene.didActivateNotification,
+            object: nil,
+            queue: OperationQueue.main) { _ in
+                if let observer = obj {
+                    NotificationCenter.default.removeObserver(observer)
+                }
+                callback()
+            }
+    } else {
+        callback()
+    }
+}
+
+func requestMicrophoneAccess(_ onRequested: @escaping (Bool)->Void) {
+    let permission = AVAudioSession.sharedInstance().recordPermission;
+    if permission == .undetermined {
+        AVAudioSession.sharedInstance().requestRecordPermission { granted in
+            onRequested(granted)
+        }
+    } else {
+        onRequested(permission == .granted)
     }
 }

@@ -92,10 +92,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             } catch {
                 NSLog("\(logtag) request access to contacts error")
             }
-
-            AVAudioSession.sharedInstance().requestRecordPermission { [self] (granted: Bool) in
-                NSLog("\(logtag) record permission \(granted ? "" : "not ")granted")
-            }
         }
 
         return true

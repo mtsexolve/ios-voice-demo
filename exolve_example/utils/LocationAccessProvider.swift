@@ -6,7 +6,6 @@ class LocationAccessProvider: NSObject, CLLocationManagerDelegate {
 
     private let locationManager = CLLocationManager()
     private var deferredAction: (() -> Void)?
-    private var observer: Any? = nil
 
     private let logtag = "LocationAccessProvider:"
     private let сategory = "location"
@@ -16,33 +15,13 @@ class LocationAccessProvider: NSObject, CLLocationManagerDelegate {
         locationManager.delegate = self
     }
 
-    deinit {
-        if let observer = observer {
-            NotificationCenter.default.removeObserver(observer)
-        }
-    }
-
     public var authorizationStatus: CLAuthorizationStatus { return locationManager.authorizationStatus }
 
-    public func requestAuthorization(deferredAction: (() -> Void)? = nil) {
+    public func requestAuthorization(_ deferredAction: (() -> Void)? = nil) {
         NSLog("\(logtag) requesting location access")
         self.deferredAction = deferredAction
-
-        if UIApplication.shared.applicationState == .active {
+        execOnApplicationActive { [self] in
             locationManager.requestAlwaysAuthorization()
-            return
-        }
-
-        observer = NotificationCenter.default.addObserver(
-            forName: UIApplication.didBecomeActiveNotification,
-            object: nil,
-            queue: OperationQueue.main) { [weak self] _ in
-                NSLog("LocationAccessProvider: app did become active, requesting authorization")
-                if let observer = self?.observer {
-                    NotificationCenter.default.removeObserver(observer)
-                    self?.observer = nil
-                }
-                self?.locationManager.requestAlwaysAuthorization()
         }
     }
 

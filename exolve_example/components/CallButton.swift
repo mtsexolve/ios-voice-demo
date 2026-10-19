@@ -6,6 +6,7 @@ public struct CallButton<Label> : View where Label : View {
     var label: Label
     var image: Image
     var imageColor: Color = Color.black
+    var enabled: Bool = true
     public var body: some View {
         Button(action: action) {
             VStack {
@@ -18,10 +19,12 @@ public struct CallButton<Label> : View where Label : View {
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 30, height: 30, alignment: .center)
                         .foregroundColor(imageColor)
+                        .opacity(enabled ? 1 : 0.5)
                 }
                 label
             }
         }
+        .disabled(!enabled)
     }
 }
 

@@ -38,7 +38,8 @@ struct CallsKeyboard: View {
                         switch (activeCall.state) {
                         case .CS_Connected:
                             CallButton(action: onHoldResume, bgColor: grey,
-                                label: Text(Strings.CallHold), image: Image(systemName: Images.Pause))
+                                label: Text(Strings.CallHold), image: Image(systemName: Images.Pause),
+                                enabled: !activeCall.call.inConference)
                             .accessibilityIdentifier("CallsKeyboardHoldButton")
                         case .CS_OnHold:
                             CallButton(action: onHoldResume, bgColor: grey,
@@ -87,6 +88,10 @@ struct CallsKeyboard: View {
     }
 
     func onTerminate() {
+        if !activeCall.call.inConference {
+            activeCall.call.terminate()
+            return
+        }
         if client.conferenceActive {
             client.dismissConference()
         } else {

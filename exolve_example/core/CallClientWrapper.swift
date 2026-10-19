@@ -27,8 +27,6 @@ class CallClientWrapper: ObservableObject, RegistrationDelegate, CallsDelegate, 
 
     private let logtag = "CallClientWrapper:"
 
-    private var activeAppObserver: (any NSObjectProtocol)? = nil
-
     private init() {
         login = Storage.login
         password = Storage.password
@@ -104,26 +102,8 @@ class CallClientWrapper: ObservableObject, RegistrationDelegate, CallsDelegate, 
     func callToNumber(number: String) {
         Storage.lastCall = number
         lastCall = number
-
-        let session = AVAudioSession.sharedInstance()
-        switch (session.recordPermission) {
-        case AVAudioSession.RecordPermission.undetermined:
-            NSLog("\(logtag) request record permission")
-            session.requestRecordPermission { [self] (granted: Bool) in
-                if granted {
-                    NSLog("\(logtag) call to \"\(number)\" context: \(callContext)")
-                    placeCall(number, extraContext: callContext)
-                }
-            }
-            break
-        case AVAudioSession.RecordPermission.granted:
-            NSLog("\(logtag) call to \"\(number)\" context: \(callContext)")
-            placeCall(number, extraContext: callContext)
-            break
-        default:
-            NSLog("\(logtag) no record permission")
-            break
-        }
+        NSLog("\(logtag) call to \"\(number)\" context: \(callContext)")
+        placeCall(number, extraContext: callContext)
     }
 
     private func placeCall(_ number: String, extraContext: String = "") {
@@ -140,13 +120,11 @@ class CallClientWrapper: ObservableObject, RegistrationDelegate, CallsDelegate, 
         }
 
         if locationServiceEnabled && LocationAccessProvider.instance.authorizationStatus == .notDetermined {
-            let action = { [self] in
-                NSLog("\(logtag) place deferred call to \(number)")
-                performCall()
+            LocationAccessProvider.instance.requestAuthorization {
+                requestMicrophoneAccess { _ in performCall() }
             }
-            LocationAccessProvider.instance.requestAuthorization(deferredAction: action)
         } else {
-            performCall()
+            requestMicrophoneAccess { _ in performCall() }
         }
     }
 
@@ -420,20 +398,8 @@ class CallClientWrapper: ObservableObject, RegistrationDelegate, CallsDelegate, 
     internal func registrationError(_ error: RegistrationError, message: String) {
         updateRegistrationState(error, message)
         if (error == RegistrationError.RE_LocationNoAccess) && LocationAccessProvider.instance.authorizationStatus == .notDetermined {
-            if UIApplication.shared.applicationState == .active {
+            execOnApplicationActive {
                 LocationAccessProvider.instance.requestAuthorization()
-            } else {
-                NSLog("\(logtag) active app required to activate account")
-                activeAppObserver = NotificationCenter.default.addObserver(
-                    forName: UIScene.didActivateNotification,
-                    object: nil,
-                    queue: OperationQueue.main) { [self] _ in
-                        LocationAccessProvider.instance.requestAuthorization()
-                        if let observer = activeAppObserver {
-                            NotificationCenter.default.removeObserver(observer)
-                            activeAppObserver = nil
-                        }
-                    }
             }
         }
     }
